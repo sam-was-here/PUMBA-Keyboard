@@ -2,6 +2,8 @@
 PUMBA has-Keyboard has:
 is a PS2 to USB macro board adapter 
 
+WARRENING: code mostly done, but a lot of work is need on documention. There are a lot of spelling/grammer messtakes and still need to add stuff to the repo.
+
 This is an arduino project that converts a PS2 keyboard into an USB keyaboard with addital fetures. It has has a built in calacultor and the abilty to make/playback macros. It had a small display on it to display differnt things. 
 
 ![IMG_20220626_191421](https://user-images.githubusercontent.com/102840190/175848182-f5005b3c-a151-4c44-8dc3-c826e4afac13.jpg)
