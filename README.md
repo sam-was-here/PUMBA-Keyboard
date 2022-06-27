@@ -18,7 +18,7 @@ Here is a list of fetures the PUMBA-Keyboard has:
   * WILL ADD SOON the ablity to change settings without puting the sd card into a PC
   * WILL ADD SOON the abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
 
-PUMBA has only been test with SAMD21 and SAMD51 micro controll board. The project COULD work on most microcontroller that can emulate a HID device. It will not work on a Arduino leardo or Uno because the program takes to much ram. It has worked with almost all PS2 keyboards i have try. It will not work with most USB keyboard using a USB to PS2 adperter.
+PUMBA has only been test with SAMD21 and SAMD51 micro controll board. The project COULD work on most microcontroller that can emulate a HID device. It will not work on a Arduino leardo or Uno because the program takes to much ram. It has worked with almost all PS2 keyboards i have try. It will not work with most USB keyboard using a USB to PS2 adperter. the code was writen useing plateformio with the arduino framwork.
 
 Tested Boards:
 * Adafruit Feather M4 Express
