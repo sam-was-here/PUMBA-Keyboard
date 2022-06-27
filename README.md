@@ -56,3 +56,20 @@ controls for the calcultor:
 
 
 when makeing macros they are all stored on the mirco SD card plugged into the device. if there is no sd card all the keyboard mode will act like normal keyboard. if there is no setting on sd card or its not plug in it will go back to defualt settings
+
+   Arduino libartys that this programs uses
+   1. PS2KeyAdvanced (in lib folder)
+   2. HID-Project
+   3. Adafruit_GFX and Adafruit_sm1306 (if useing oled display)
+   4. SD
+
+  Doc on how to use the PS2KEYADVANCE Libarty.
+  https://github.com/techpaul/PS2KeyAdvanced
+  You should go through it to made sure how to use it.
+
+  PS2KeyAdvanced lib is in the lib folder. I modifly the lib to disable keypad switching keybindings and change lock keys to not break everything
+   Num Lock is now PS2_KEY_LANG1
+   Scoll Lock is now PS2_KEY_LANG2
+   Cap Lock is now PS2_KEY_LANG3
+   Sending data (Lock led) to the ps2 keyboard dont work using a SAMD board ().
+
