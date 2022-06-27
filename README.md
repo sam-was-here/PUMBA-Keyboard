@@ -81,8 +81,14 @@ On the PUMBA Keyboard you can change settings like how long it takes for the scr
 
 To change setting using the SD card
  1. make a file on sd card called CONFIG.TXT in a folder named SETTING
- 2. in the config file put the name of the settings folloed by a "="
-   * sleep sleep
- 3.
- 4.
+ 2. in the config file put the name of the settings folloed by a "=". each setting needs to be on a newline
+   - sleep=SETTING
+     - SETTING the time in min that the screen withh turn off
+   - fnkey=SETTING
+     - SETTING is the ps2lib key binding in dec, the key that is used as function key
+   - rotation=SETTING
+     - SETTING set the rotation of the screen, 0 is defualt, 1 is rotated 180 degress
+
+ 3. Save changes to the file
+ 4. put sd card in to the PUMBA and then plug it in
 
