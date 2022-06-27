@@ -32,19 +32,20 @@ There are PCB and cases for this project. You dont have to use the PCB, you can 
 The PUMBA keyboard has 6 differnt keyboard modes wither there own layouts and macros on it. There are is one mode decacated just for the keyboard being just a calulator, but all Keyboard modes have the ablity for the numpad to become a calculator. There is also a hex and dec converter mode and another keyboard mode that cant use macros.
 
 When you plug in the PUMBA keyboard into a computer it will go into "Keyboard 1" mode. You switch modes by pressing the "function key" witch is defualt set to the menu button. after you press the function key the display will pop up things that you can do. To switch modes you press the corispnding key for the mode. if you press the function key again it will take you to the 2nd to last mode you are in.
+
 list of key and what they do:
-1: Keyboard 1
-2: Keyboard 2
-3: Keyboard 3
-4: Keyboard 4
-5: Keyboard 5
-6: Keyboard 6
-7: 
-8: Hex and dec converter
-9: calculator
-0: keyboard mode with no macros
-Shift + 1-6: keyboard mode but the numpad is a calculator
-Ctrl + 1-6: program macros for a key in the mode
+* 1: Keyboard 1 
+* 2: Keyboard 2
+* 3: Keyboard 3
+* 4: Keyboard 4
+* 5: Keyboard 5
+* 6: Keyboard 6
+* 7: 
+* 8: Hex and dec converter
+* 9: calculator
+* 0: keyboard mode with no macros
+* Shift + 1-6: keyboard mode but the numpad is a calculator
+* Ctrl + 1-6: program macros for a key in the mode
 
 controls for the calcultor:
 * Num Lock / Backspace: delates lest charitor
@@ -70,8 +71,9 @@ when makeing macros they are all stored on the mirco SD card plugged into the de
   You should go through it to made sure how to use it.
 
   PS2KeyAdvanced lib is in the lib folder. I modifly the lib to disable keypad switching keybindings and change lock keys to not break everything
-   Num Lock is now PS2_KEY_LANG1
-   Scoll Lock is now PS2_KEY_LANG2
-   Cap Lock is now PS2_KEY_LANG3
-   Sending data (Lock led) to the ps2 keyboard dont work using a SAMD board ().
+  
+*   Num Lock is now PS2_KEY_LANG1
+*   Scoll Lock is now PS2_KEY_LANG2
+*   Cap Lock is now PS2_KEY_LANG3
+*   Sending data (Lock led) to the ps2 keyboard dont work using a SAMD board.
 
