@@ -69,11 +69,11 @@ void Ps2tohid::begin(int dataPin1, int clkPin2, int chipSelect)
   display1.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS, false, true);
 
   // getting setting from sd card
-  if (_sdStatus)
-  {
+//   if (_sdStatus)
+//   {
     setSetting();
     setLayout();
-  }
+//   }
 }
 
 // return true if SD card was plug in when the keyboard was powered up
