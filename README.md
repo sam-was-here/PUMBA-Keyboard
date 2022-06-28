@@ -17,8 +17,9 @@ Here is a list of fetures the PUMBA-Keyboard has:
   * Hex and Dec converter mode
   * Forces numlock on so you dont always have to turn it on (do on startup and when modes are being changed)
   * Some other things but cant remenber
-  * WILL ADD SOON the ablity to change settings without puting the sd card into a PC
-  * WILL ADD SOON the abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
+  * the abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
+  * WILL ADD SOON the ablity to change settings/key bindings without puting the sd card into a PC 
+
 
 PUMBA has only been test with SAMD21 and SAMD51 micro controll board. The project COULD work on most microcontroller that can emulate a HID device. It will not work on a Arduino leardo or Uno because the program takes to much ram. It has worked with almost all PS2 keyboards i have try. It will not work with most USB keyboard using a USB to PS2 adperter. the code was writen useing plateformio with the arduino framwork.
 
