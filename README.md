@@ -80,7 +80,7 @@ when makeing macros they are all stored on the mirco SD card plugged into the de
 
 On the PUMBA Keyboard you can change settings like how long it takes for the screen to turn off, the rotation of the screen, and what the function key is. currently there is no way to change these settings using the keyboard but you can change them in the code or put the setting in a file on the sd card. the pumba on start up looks for a config file located /SETTING/CONFIG.TXT on sd card to change the settings. 
 
-To change setting using the SD card
+To change setting using the SD card. there is a exsample in the code folder
  1. make a file on sd card called CONFIG.TXT in a folder named SETTING
  2. in the config file put the name of the settings folloed by a "=". each setting needs to be on a newline
    - sleep=SETTING
@@ -93,10 +93,5 @@ To change setting using the SD card
  3. Save changes to the file
  4. put sd card in to the PUMBA and then plug it in
 
-how to rebind keys
-1.
-2.
-3.
-4.
-5.
+The Pumba now has the ablity to rebind keys per keyboard mode. 
 
