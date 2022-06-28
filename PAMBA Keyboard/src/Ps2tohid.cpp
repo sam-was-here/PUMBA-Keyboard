@@ -1078,7 +1078,7 @@ void Ps2tohid::recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, boo
       // if the file is available, write to it:
 
       delayString += String(_keyDelay / speedChange);
-      int usbScanCodes = usbCodes(_code, 0);
+      int usbScanCodes = usbCodes(_code, modeNum.toInt());
 
       if (!(_code & PS2_BREAK))
       {
@@ -1101,7 +1101,7 @@ void Ps2tohid::recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, boo
       {
         if ((removeDelay))
         {
-          dataFile.println("-1");
+          dataFile.println("-1"); // if i recalled right -1 means release all keys
           removeDelay = false;
         }
         else
