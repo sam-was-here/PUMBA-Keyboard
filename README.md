@@ -87,7 +87,7 @@ To change setting using the SD card
    - fnkey=SETTING
      - SETTING is the ps2lib key binding in dec, the key that is used as function key
    - rotation=SETTING
-     - SETTING set the rotation of the screen, 0 is defualt, 1 is rotated 180 degress
+     - SETTING set the rotation of the screen, 0 is defualt, 2 is rotated 180 degress
 
  3. Save changes to the file
  4. put sd card in to the PUMBA and then plug it in
