@@ -71,6 +71,8 @@ when makeing macros they are all stored on the mirco SD card plugged into the de
   Doc on how to use the PS2KEYADVANCE Libarty.
   https://github.com/techpaul/PS2KeyAdvanced
   You should go through it to made sure how to use it.
+  
+  this project uses Project-hid for all the usb keyboard stuff. here is the doc for it: https://github.com/NicoHood/HID
 
   PS2KeyAdvanced lib is in the lib folder. I modifly the lib to disable keypad switching keybindings and change lock keys to not break everything
   
