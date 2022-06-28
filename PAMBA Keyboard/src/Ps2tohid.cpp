@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 #include "Arduino.h"
 #include "Ps2tohid.h"
 #include <PS2KeyAdvanced.h>
@@ -39,6 +38,8 @@ void _macroFinder();
 int keyboardCheck();
 bool sdStatus();
 byte displayRotation();
+void setLayout();
+
 // int _solveHexDec(String currentHexDec);
 
 // set a couple of peramiters. will mod later and can get info from SD card
@@ -71,6 +72,7 @@ void Ps2tohid::begin(int dataPin1, int clkPin2, int chipSelect)
   if (_sdStatus)
   {
     setSetting();
+    setLayout();
   }
 }
 
@@ -91,64 +93,63 @@ void Ps2tohid::setSetting()
     return;
   if ((SD.exists("setting/config.TXT")))
   {
-  
 
-  // change the setting
-  String buffer;
-  File dataFile = SD.open("setting/config.TXT");
-  if (dataFile)
-  {
-    while (dataFile.available())
+    // change the setting
+    String buffer;
+    File dataFile = SD.open("setting/config.TXT");
+    if (dataFile)
     {
-      // Write one line to buffer
-      buffer = dataFile.readStringUntil('\n');
-      // test to see if line don't have #, # is a comment
-      if (!buffer.startsWith("#"))
+      while (dataFile.available())
       {
-        // Serial.println("should run 3 times");
-        //  splits buffer it to the 2 parts. name and data parts, splits by =
-        int breakIdx = buffer.indexOf('=');                  // the point the data is splited
-        String settingName = buffer.substring(0, breakIdx);  // the name of the setting
-        String settingData = buffer.substring(breakIdx + 1); // value of the setting
-        // Serial.println(settingName);
-        // Serial.println(settingData);
+        // Write one line to buffer
+        buffer = dataFile.readStringUntil('\n');
+        // test to see if line don't have #, # is a comment
+        if (!buffer.startsWith("#"))
+        {
+          // Serial.println("should run 3 times");
+          //  splits buffer it to the 2 parts. name and data parts, splits by =
+          int breakIdx = buffer.indexOf('=');                  // the point the data is splited
+          String settingName = buffer.substring(0, breakIdx);  // the name of the setting
+          String settingData = buffer.substring(breakIdx + 1); // value of the setting
+          // Serial.println(settingName);
+          // Serial.println(settingData);
 
-        if (settingName.equalsIgnoreCase("sleep")) // sleep timer
-        {
-          _interval = settingData.toInt();
-          _interval = _interval * interval;
-        }
-        else if (settingName.equalsIgnoreCase("fnkey")) // function key
-        {
-          functionKey = settingData.toInt();
-        }
-        else if (settingName.equalsIgnoreCase("rotation")) // display flip
-        {
-          _displayRotation = settingData.toInt();
-          display1.setRotation(_displayRotation);
-        }
-        else if (settingName.equalsIgnoreCase("setting4="))
-        {
-        }
-        else if (settingName.equalsIgnoreCase("setting5="))
-        {
-        }
-        else if (settingName.equalsIgnoreCase("setting6="))
-        {
-        }
-        else if (settingName.equalsIgnoreCase("setting7="))
-        {
-        }
-        else if (settingName.equalsIgnoreCase("setting8="))
-        {
-        }
-        else if (settingName.equalsIgnoreCase("setting9="))
-        {
+          if (settingName.equalsIgnoreCase("sleep")) // sleep timer
+          {
+            _interval = settingData.toInt();
+            _interval = _interval * interval;
+          }
+          else if (settingName.equalsIgnoreCase("fnkey")) // function key
+          {
+            functionKey = settingData.toInt();
+          }
+          else if (settingName.equalsIgnoreCase("rotation")) // display flip
+          {
+            _displayRotation = settingData.toInt();
+            display1.setRotation(_displayRotation);
+          }
+          else if (settingName.equalsIgnoreCase("setting4="))
+          {
+          }
+          else if (settingName.equalsIgnoreCase("setting5="))
+          {
+          }
+          else if (settingName.equalsIgnoreCase("setting6="))
+          {
+          }
+          else if (settingName.equalsIgnoreCase("setting7="))
+          {
+          }
+          else if (settingName.equalsIgnoreCase("setting8="))
+          {
+          }
+          else if (settingName.equalsIgnoreCase("setting9="))
+          {
+          }
         }
       }
+      dataFile.close();
     }
-    dataFile.close();
-  }
   }
   // update macro list
   // set all list to false
@@ -179,9 +180,9 @@ void Ps2tohid::setSetting()
       }
 
       String fileName = entry.name(); // turn the name of the file into a string
-      if (fileName.endsWith(".TXT"))      // check to see if file or folder
-      { 
-        switch (i)      // put the macro to the mode it is for
+      if (fileName.endsWith(".TXT"))  // check to see if file or folder
+      {
+        switch (i) // put the macro to the mode it is for
         {
         case 1:
           _marcoKeyList1[fileName.toInt()] = true;
@@ -212,6 +213,112 @@ void Ps2tohid::updateSetting()
 {
   if (!_sdStatus) // breaks if no sd card in
     return;
+}
+
+void Ps2tohid::setLayout()
+{
+  bool _modesWLayout[7] = {0, 0, 0, 0, 0, 0, 0}; // need to be 7 and not 6 because indexing of arrey starts at 0 and the array index is the folder the file is in
+  // when no sd card all layouts are set to the default (layout0)
+
+  if (_sdStatus) // if there is a sd card, it will check each mode to see if there is a layout file
+  {
+    _modesWLayout[1] = SD.exists("1/layout.TXT");
+    _modesWLayout[2] = SD.exists("2/layout.TXT");
+    _modesWLayout[3] = SD.exists("3/layout.TXT");
+    _modesWLayout[4] = SD.exists("4/layout.TXT");
+    _modesWLayout[5] = SD.exists("5/layout.TXT");
+    _modesWLayout[6] = SD.exists("6/layout.TXT");
+  }
+  // set keys with macros to true for each mode
+  for (int i = 1; i <= 6; i++)
+  {
+    if (_modesWLayout[i])
+    {
+      String buffer;
+      File dataFile = SD.open(String(i) + "/layout.TXT");
+
+      // If the file is available, read it
+      if (dataFile)
+      {
+        for (int n = 0; n <= 160; n++)    // runs only 161 times
+        {
+          if (!dataFile.available()) // if the file was not complet it will not put random stuff as keybindings, it will unbind the rest of the keys
+          {
+            // make binding 0
+          }
+          else
+          {
+            buffer = dataFile.readStringUntil('\n');
+            int rawDateInt = buffer.toInt();
+            switch (i)
+            {
+            case 1:
+                layout1[n] = rawDateInt;
+              break;
+            case 2:
+                layout2[n] = rawDateInt;
+              break;
+            case 3:
+                layout3[n] = rawDateInt;
+              break;
+            case 4:
+                layout4[n] = rawDateInt;
+              break;
+            case 5:
+                layout5[n] = rawDateInt;
+              break;
+            case 6:
+                layout6[n] = rawDateInt;
+              break;
+            }
+          }
+        }
+        dataFile.close();
+      }
+    }
+    else // if there is no sd card or the mode dont have a layout this will make it the defualt layout
+    {
+      switch (i)
+      {
+      case 1:
+        for (int k = 0; k <= 160; k++)
+        {
+          layout1[k] = layout0[k];
+        }
+        break;
+      case 2:
+        for (int k = 0; k <= 160; k++)
+        {
+          layout2[k] = layout0[k];
+        }
+        break;
+      case 3:
+        for (int k = 0; k <= 160; k++)
+        {
+          layout3[k] = layout0[k];
+        }
+        break;
+      case 4:
+        for (int k = 0; k <= 160; k++)
+        {
+          layout4[k] = layout0[k];
+        }
+        break;
+      case 5:
+        for (int k = 0; k <= 160; k++)
+        {
+          layout5[k] = layout0[k];
+        }
+        break;
+      case 6:
+        for (int k = 0; k <= 160; k++)
+        {
+          layout6[k] = layout0[k];
+        }
+        break;
+      }
+    }
+  }
 }
 
 /*
@@ -565,22 +672,22 @@ int Ps2tohid::usbCodes(int code, int layout)
   switch (layout)
   {
   case 1:
-    usbCode = layout0[code & 0xFF];
+    usbCode = layout1[code & 0xFF];
     break;
   case 2:
-    usbCode = layout0[code & 0xFF];
+    usbCode = layout2[code & 0xFF];
     break;
   case 3:
-    usbCode = layout0[code & 0xFF];
+    usbCode = layout3[code & 0xFF];
     break;
   case 4:
-    usbCode = layout0[code & 0xFF];
+    usbCode = layout4[code & 0xFF];
     break;
   case 5:
-    usbCode = layout0[code & 0xFF];
+    usbCode = layout5[code & 0xFF];
     break;
   case 6:
-    usbCode = layout0[code & 0xFF];
+    usbCode = layout6[code & 0xFF];
     break;
 
   default:
@@ -1206,7 +1313,7 @@ bool Ps2tohid::keyMacroMode(String modeName, bool calcFuncMode)
 
     if (keyboardCode > 0)
     {
-      usbPress = usbCodes(keyboardCode, 0);
+      usbPress = usbCodes(keyboardCode, modeName.toInt());
       if (!(keyboardCode & PS2_BREAK))
       { // see if key is press
 
@@ -1216,11 +1323,12 @@ bool Ps2tohid::keyMacroMode(String modeName, bool calcFuncMode)
           {
           case 0x53: // num lock, use to print what is in calculater
             // i dont know why but this allways run (when num lock press) even if its not support to
-            if (calcFuncMode){
+            if (calcFuncMode)
+            {
               calcMode(0x96, "Calc+Key " + modeName);
               //_calcDelete();
             }
-              break;
+            break;
           case 0x39: // cap lock, do nothing
             break;
           case 0x47: // scroll lock, use to print what is in calculater
@@ -1251,7 +1359,7 @@ bool Ps2tohid::keyMacroMode(String modeName, bool calcFuncMode)
       }
     }
   }
-BootKeyboard.releaseAll(); // release all key when switching modes
+  BootKeyboard.releaseAll(); // release all key when switching modes
   if (keyboardCode == -2)
   {
     switchModes = false;
