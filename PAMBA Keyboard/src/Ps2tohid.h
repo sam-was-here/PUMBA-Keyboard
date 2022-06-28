@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 #ifndef PS2TOHID_h
 #define PS2TOHID_h
 
@@ -37,6 +36,7 @@ public:
   const long interval = 60 * 1000;
   void setSetting();    // get setting from sd card
   void updateSetting(); // update current setting to sd card
+  void setLayout();
   // Methods
   void begin(int dataPin1, int clkPin2, int chipSelect);
   int keyboardCheck();
@@ -96,7 +96,7 @@ public:
       41,   // #define PS2_KEY_ESC         0x1B
       42,   // #define PS2_KEY_BS          0x1C
       43,   // #define PS2_KEY_TAB         0x1D
-      0x58, // #define PS2_KEY_ENTER       0x1E
+      40, // #define PS2_KEY_ENTER       0x1E
       44,   // #define PS2_KEY_SPACE       0x1F
       0x62, // #define PS2_KEY_KP0         0x20
       0x59, // #define PS2_KEY_KP1         0x21
