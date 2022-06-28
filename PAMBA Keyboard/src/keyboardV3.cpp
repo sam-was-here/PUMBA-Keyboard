@@ -616,6 +616,9 @@ bool hexDecMode()
         case PS2_KEY_LANG1: // num lock key print number to your computer
           BootKeyboard.print(hexDecAnswer, HEX);
           break;
+        case PS2_KEY_LANG2: // num lock key print number to your computer
+          BootKeyboard.print(hexDecAnswer);
+          break;
         }
       }
       // update screen with all the calculator stuff
