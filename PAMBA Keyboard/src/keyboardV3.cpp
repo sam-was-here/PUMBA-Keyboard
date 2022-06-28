@@ -161,7 +161,7 @@ void setup()
       ; // Don't proceed, loop forever
   }
   // Serial.println("display started");
-  Ps2tohidLib.begin(DATAPIN, IRQPIN, chipSelect);
+  Ps2tohidLib.begin(DATAPIN, IRQPIN, chipSelect, SCREEN_ADDRESS);
   display.setRotation(Ps2tohidLib.displayRotation());
   display.display();
 
