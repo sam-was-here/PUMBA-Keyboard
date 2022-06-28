@@ -30,7 +30,7 @@ Tested Boards:
 
 There are PCB and cases for this project. You dont have to use the PCB, you can embend everything inside a keyboard or use a bread board. included is KiCad project files, pdf of the schmatic, pdf of the PCBs, and BOM.
 
-The PUMBA keyboard has 6 differnt keyboard modes wither there own layouts and macros on it. There are is one mode decacated just for the keyboard being just a calulator, but all Keyboard modes have the ablity for the numpad to become a calculator. There is also a hex and dec converter mode and another keyboard mode that cant use macros.
+The PUMBA keyboard has 6 differnt keyboard modes wither there own layouts and macros on it. There are is one mode decacated just for the keyboard being just a calulator, but all Keyboard modes have the ablity for the numpad to become a calculator. There is also a hex and dec converter mode and another keyboard mode that cant use macros.WILL ADD SOON 
 
 When you plug in the PUMBA keyboard into a computer it will go into "Keyboard 1" mode. You switch modes by pressing the "function key" witch is defualt set to the menu button. after you press the function key the display will pop up things that you can do. To switch modes you press the corispnding key for the mode. if you press the function key again it will take you to the 2nd to last mode you are in.
 
@@ -92,4 +92,11 @@ To change setting using the SD card
 
  3. Save changes to the file
  4. put sd card in to the PUMBA and then plug it in
+
+how to rebind keys
+1.
+2.
+3.
+4.
+5.
 
