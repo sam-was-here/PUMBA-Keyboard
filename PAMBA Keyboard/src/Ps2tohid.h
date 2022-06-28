@@ -38,7 +38,7 @@ public:
   void updateSetting(); // update current setting to sd card
   void setLayout();
   // Methods
-  void begin(int dataPin1, int clkPin2, int chipSelect);
+  void begin(int dataPin1, int clkPin2, int chipSelect, int i2cAdrs);
   int keyboardCheck();
   int functionKey;
   int usbCodes(int code, int layout);
@@ -64,7 +64,7 @@ public:
   byte layout4[161];
   byte layout5[161];
   byte layout6[161];
-  // default layout, store not on SD card. normal us layout
+  // default layout, store not on SD card. normal us layout, should change to const
   byte layout0[161] = {
       0,    // not a scan code, all 0 mean not bindend to anything
       0,    // #define PS2_KEY_NUM         0X01	// was 0x01, change to unreal num so dont break
