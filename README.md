@@ -93,5 +93,4 @@ To change setting using the SD card. there is a exsample in the code folder
  3. Save changes to the file
  4. put sd card in to the PUMBA and then plug it in
 
-The Pumba now has the ablity to rebind keys per keyboard mode. 
-
+The Pumba now has the ablity to rebind keys per keyboard mode. to rebind the key you have to make a file called LAYOUT.TXT and put it in the mode you want to rebind the keys. the line number is the ps2lib key name and the number on the line is the hid scancode in decimal. in the code files the is a file called "default layout.txt" with is the default bind. you can copy the file and rename it and then modifly it to your needs. there is also the file called "layout cheatsheet.txt" that can help you too
