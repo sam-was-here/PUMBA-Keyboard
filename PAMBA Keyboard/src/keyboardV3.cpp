@@ -20,7 +20,7 @@
 
 
 
-  In advances, sorry for all the bad spelling in the comments or other things. 
+  In advances, sorry for all the bad spelling in the comments or other things.
   Im not the best at spelling and I dont care enghouf to spell check everything.
 
   This project does is converts a PS2 keyboard into a USB keyboard with additional fertuers.
@@ -29,12 +29,11 @@
   * The ablity to easly make macros on the fly without any PC software
   * All setting/macros are stored on the SD card so you can easyly modifly/backup them.
   * Calculater mode that turns part or the whole keyboard in to calculate and send results as keypresses
-  * In any of the 6 keyboard modes you can convert the numpad into a calculter and leave the rest of the keyboard alown 
+  * In any of the 6 keyboard modes you can convert the numpad into a calculter and leave the rest of the keyboard alown
   * Hex and Dec converter mode
   * Forces numlock on so you dont always have to turn it on (do on startup and when modes are being changed)
-  * 
-  * WILL ADD SOON the ablity to change settings without puting the sd card into a PC
-  * WILL ADD SOON the abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
+  * The ablity to change settings without puting the sd card into a PC
+  * The abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
 
   All the mode on the keyboard:
    Mode 1-6 is keyboard mode and most keys can have macros on them through SD card .
@@ -72,10 +71,7 @@
  * clean up all unused vars and change int's to other form of int to save space. hole can run on avr boards but dout
  * add golble defines in libary.
  * add mode starting permaiters to labary so less configing in libary.
- * remove all the .h files i used VERY wrongly and make a differnt libary or something else.
  * make better doc on how to add, remove, and modifly the modes.
- * make mode function return a bool so you can switch modes eszey in differnt ways, and make mode switch local to void loop
- * aloud user to change modes with differnt buttons. lib peram.
  * test on other boards like esp32.
  * bind all ps2 scancode to a hid scancode. (even if wrong, so people can use them for macros)
  */
@@ -128,7 +124,7 @@ const int chipSelect = 3;
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // uint16_t code;
-int usbPress;
+int usbPress; // should change to a local var
 
 /* Mode 1-6 is keyboard mode and most keys can have macros on them through SD card .
    Mode 7 is macro mode, you can run scripts that is binded to the key press. scripts are made in the code
@@ -174,14 +170,9 @@ void setup()
   display.setTextColor(SSD1306_WHITE);
   display.print(modeStr[mode]);
   display.display();
-}
 
-// functions that run in all modes
-// inported files with code to make look neeter.
-//#include "keyPressMap.h"
-//#include "keyMacro.h"
-//#include "keyCalc.h"
-//#include "hexDecBin.h"
+  BootKeyboard.releaseAll(); // release all keys when plug in keyboard, sometimes some keys are press  when they are not
+}
 
 /* to make new modes you add this
   void keyMode#() {
@@ -320,100 +311,6 @@ void keyMode2()
   }
   return;
 }
-
-// void keyMode3()
-// {
-//   int keyboardCode = 0;
-//   while (keyboardCode > -1)
-//   {
-//     keyboardCode = Ps2tohidLib.keyboardCheck();
-//     if (keyboardCode > 0)
-//     {
-//       /*KeyboardMode func converts all ps2 key inputs to
-//         usb key presses using the "Keyboard" libary.
-//         This is so the ps2 keybaord can be a usb keyboard.
-//         The keyboard had */
-//       Serial.print("Delay: ");
-//       Serial.println(Ps2tohidLib.keyPressDelay());
-
-//       if (!(keyboardCode & PS2_BREAK))
-//       {
-//         Serial.print("Press: ");
-//         Serial.println(Ps2tohidLib.usbCodes(keyboardCode) + 256, HEX);
-//       }
-//       if ((keyboardCode & PS2_BREAK))
-//       {
-//         Serial.print("Release: ");
-//         Serial.println(Ps2tohidLib.usbCodes(keyboardCode), HEX);
-//       }
-//     }
-//   }
-//   if (keyboardCode == -2)
-//   {
-//     modeSwitch = false;
-//   }
-//   else
-//   {
-//     modeSwitch = true;
-//   }
-//   return;
-// }
-
-// void keyMode4()
-// {
-//   int keyboardCode = 0;
-
-//   while (keyboardCode > -1)
-//   {
-//     keyboardCode = Ps2tohidLib.keyboardCheck();
-//     if (keyboardCode > 0)
-//     {
-//       Serial.println(Ps2tohidLib.keyPressDelay());
-//       usbPress = Ps2tohidLib.usbCodes(keyboardCode);
-//       if (!(keyboardCode & PS2_BREAK))
-//       { // see if key is press
-//         switch (usbPress)
-//         {
-//         case 0x53: // num lock, use to print what is in calculater
-//           BootKeyboard.print(currentNum);
-//           break;
-//         case 0x39: // cap lock, do nothing
-//           break;
-//         case 0x47: // scroll lock, do nothing
-//           break;
-//         default:
-//           BootKeyboard.press(KeyboardKeycode(usbPress)); // press the key
-//           Serial.println(usbPress + 256, HEX);
-//         }
-//       }
-//       else
-//       { //see if key is not press it will release key
-//         switch (usbPress)
-//         {
-//         case 0x53: // num lock, use to print what iis in calculater
-//           //Keyboard.print(currentNum);
-//           break;
-//         case 0x39: // cap lock, do nothing
-//           break;
-//         case 0x47: // scroll lock, do nothing
-//           break;
-//         default:
-//           BootKeyboard.release(KeyboardKeycode(usbPress)); //release the key
-//           Serial.println(usbPress, HEX);
-//         }
-//       }
-//     }
-//   }
-//   if (keyboardCode == -2)
-//   {
-//     modeSwitch = false;
-//   }
-//   else
-//   {
-//     modeSwitch = true;
-//   }
-//   return;
-// }
 
 int _solveHexDec(String currentHexDec)
 {
@@ -675,7 +572,7 @@ void macroMaker(int mode)
     display.setCursor(0, 0);
     display.clearDisplay();
     display.setTextSize(1);
-    display.println("press key you want to program a macro for.");
+    display.println("press key you want to reprogram.");
     display.println();
     display.println("press fn button to break");
     display.display();
@@ -700,19 +597,21 @@ void macroMaker(int mode)
       return;
     }
 
+    int ps2Code = keyboardCode;
     // what scan code you want to set macro for
-    int scanCode = Ps2tohidLib.usbCodes(keyboardCode, 0);
+    int scanCode = Ps2tohidLib.usbCodes(keyboardCode, mode);
 
-    // for selecting if you only want to delet a macro
+    // deiced to make macro or rebind key
     display.clearDisplay();
     display.setTextSize(1);
     display.setCursor(0, 0);
-    display.println("Do you want to program or remove a macro?");
+    display.println("Do you want to program a macro or rebind the key?");
     display.println();
-    display.println("press 'y' to program, 'n' to only delete");
+    display.println("press 'y' to program, 'n' to rebind");
     display.display();
     keyboardCode = 0;
 
+    // looks for user input
     while (keyboardCode == 0)
     {
       keyboardCode = Ps2tohidLib.keyboardCheck();
@@ -725,127 +624,186 @@ void macroMaker(int mode)
         keyboardCode = 0;
       }
     }
-    if (keyboardCode == PS2_KEY_Y)
+
+    if (keyboardCode == PS2_KEY_N) // rebind keys
     {
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setCursor(0, 0);
+      display.println("press the key that you want it to be rebinded too");
+      display.println();
+      display.display();
+      keyboardCode = 0;
+      while (keyboardCode == 0)
+      {
+        keyboardCode = Ps2tohidLib.keyboardCheck();
+        if (keyboardCode < 0)
+        {
+          break;
+        }
+        if (keyboardCode & PS2_BREAK)
+        {
+          keyboardCode = 0;
+        }
+      }
+      if (keyboardCode < 0)
+      {
+        return;
+      }
+
+      scanCode = Ps2tohidLib.usbCodes(keyboardCode, 0); // gets the hid scancode of the key in layout 0 (default)
+      Ps2tohidLib.keyRebinder(scanCode, ps2Code, mode, true);
+      return;
     }
-    else if (keyboardCode == PS2_KEY_N)
+    else if (keyboardCode == PS2_KEY_Y) // program macro
     {
-      Ps2tohidLib.recordMacros(scanCode, String(mode), false, true, 1);
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setCursor(0, 0);
+      display.println("Do you want to program or remove a macro?");
+      display.println();
+      display.println("press 'y' to program, 'n' to only delete");
+      display.display();
+      keyboardCode = 0;
+
+      while (keyboardCode == 0)
+      {
+        keyboardCode = Ps2tohidLib.keyboardCheck();
+        if (keyboardCode < 0)
+        {
+          break;
+        }
+        if (keyboardCode & PS2_BREAK)
+        {
+          keyboardCode = 0;
+        }
+      }
+      if (keyboardCode == PS2_KEY_Y)
+      {
+      }
+      else if (keyboardCode == PS2_KEY_N)
+      {
+        Ps2tohidLib.recordMacros(scanCode, mode, false, true, 1);
+        return;
+      }
+      else
+      {
+        return;
+      }
+
+      // choose play back speed
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setCursor(0, 0);
+      display.println("What playback speed do you want");
+      display.println();
+
+      display.println("a number key to choose speed, 1 is 1x speed");
+      display.display();
+      keyboardCode = 0;
+
+      while (keyboardCode == 0)
+      {
+        keyboardCode = Ps2tohidLib.keyboardCheck();
+        if (keyboardCode < 0)
+        {
+          break;
+        }
+        if (keyboardCode & PS2_BREAK)
+        {
+          keyboardCode = 0;
+        }
+      }
+
+      switch (keyboardCode)
+      {
+      case PS2_KEY_1:
+      case PS2_KEY_KP1:
+        playBackSpeed = 1;
+        break;
+      case PS2_KEY_2:
+      case PS2_KEY_KP2:
+        playBackSpeed = 2;
+        break;
+      case PS2_KEY_3:
+      case PS2_KEY_KP3:
+        playBackSpeed = 3;
+        break;
+      case PS2_KEY_4:
+      case PS2_KEY_KP4:
+        playBackSpeed = 4;
+        break;
+      case PS2_KEY_5:
+      case PS2_KEY_KP5:
+        playBackSpeed = 5;
+        break;
+      case PS2_KEY_6:
+      case PS2_KEY_KP6:
+        playBackSpeed = 6;
+        break;
+      case PS2_KEY_7:
+      case PS2_KEY_KP7:
+        playBackSpeed = 7;
+        break;
+      case PS2_KEY_8:
+      case PS2_KEY_KP8:
+        playBackSpeed = 8;
+        break;
+      case PS2_KEY_9:
+      case PS2_KEY_KP9:
+        playBackSpeed = 9;
+        break;
+      default:
+        return;
+      }
+
+      // if you want to send scan codes to your pc whan making the macro
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setCursor(0, 0);
+      display.println("do you want key presses to send to pc when making macro?");
+      display.println();
+
+      display.println("press 'y' for yes, 'n' for no");
+      display.display();
+      keyboardCode = 0;
+
+      while (keyboardCode == 0)
+      {
+        keyboardCode = Ps2tohidLib.keyboardCheck();
+        if (keyboardCode < 0)
+        {
+          break;
+        }
+        if (keyboardCode & PS2_BREAK)
+        {
+          keyboardCode = 0;
+        }
+      }
+
+      display.clearDisplay();
+      display.setTextSize(1);
+      display.setCursor(0, 0);
+      display.println("Macros are being recoded now.");
+      display.println();
+      display.println("press fn key to stop recording");
+
+      display.display();
+
+      if (keyboardCode == PS2_KEY_Y)
+      {
+        Ps2tohidLib.recordMacros(scanCode, mode, true, false, playBackSpeed);
+      }
+      else if (keyboardCode == PS2_KEY_N)
+      {
+        Ps2tohidLib.recordMacros(scanCode, mode, false, false, playBackSpeed);
+      }
       return;
     }
     else
     {
       return;
     }
-
-    // choose play back speed
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);
-    display.println("What playback speed do you want");
-    display.println();
-
-    display.println("a number key to choose speed, 1 is 1x speed");
-    display.display();
-    keyboardCode = 0;
-
-    while (keyboardCode == 0)
-    {
-      keyboardCode = Ps2tohidLib.keyboardCheck();
-      if (keyboardCode < 0)
-      {
-        break;
-      }
-      if (keyboardCode & PS2_BREAK)
-      {
-        keyboardCode = 0;
-      }
-    }
-
-    switch (keyboardCode)
-    {
-    case PS2_KEY_1:
-    case PS2_KEY_KP1:
-      playBackSpeed = 1;
-      break;
-    case PS2_KEY_2:
-    case PS2_KEY_KP2:
-      playBackSpeed = 2;
-      break;
-    case PS2_KEY_3:
-    case PS2_KEY_KP3:
-      playBackSpeed = 3;
-      break;
-    case PS2_KEY_4:
-    case PS2_KEY_KP4:
-      playBackSpeed = 4;
-      break;
-    case PS2_KEY_5:
-    case PS2_KEY_KP5:
-      playBackSpeed = 5;
-      break;
-    case PS2_KEY_6:
-    case PS2_KEY_KP6:
-      playBackSpeed = 6;
-      break;
-    case PS2_KEY_7:
-    case PS2_KEY_KP7:
-      playBackSpeed = 7;
-      break;
-    case PS2_KEY_8:
-    case PS2_KEY_KP8:
-      playBackSpeed = 8;
-      break;
-    case PS2_KEY_9:
-    case PS2_KEY_KP9:
-      playBackSpeed = 9;
-      break;
-    default:
-      return;
-    }
-
-    // if you want to send scan codes to your pc whan making the macro
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);
-    display.println("do you want key presses to send to pc when making macro?");
-    display.println();
-
-    display.println("press 'y' for yes, 'n' for no");
-    display.display();
-    keyboardCode = 0;
-
-    while (keyboardCode == 0)
-    {
-      keyboardCode = Ps2tohidLib.keyboardCheck();
-      if (keyboardCode < 0)
-      {
-        break;
-      }
-      if (keyboardCode & PS2_BREAK)
-      {
-        keyboardCode = 0;
-      }
-    }
-
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);
-    display.println("Macros are being recoded now.");
-    display.println();
-    display.println("press fn key to stop recording");
-
-    display.display();
-
-    if (keyboardCode == PS2_KEY_Y)
-    {
-      Ps2tohidLib.recordMacros(scanCode, String(mode), true, false, playBackSpeed);
-    }
-    else if (keyboardCode == PS2_KEY_N)
-    {
-      Ps2tohidLib.recordMacros(scanCode, String(mode), false, false, playBackSpeed);
-    }
-    return;
   }
   else
   {
@@ -923,37 +881,37 @@ void loop()
       case PS2_KEY_1:
       case PS2_KEY_KP1:
         mode = 11;
-        modeSwitch = Ps2tohidLib.keyMacroMode("1", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(1, true);
         updateLastModes();
         break;
       case PS2_KEY_2:
       case PS2_KEY_KP2:
         mode = 12;
-        modeSwitch = Ps2tohidLib.keyMacroMode("2", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(2, true);
         updateLastModes();
         break;
       case PS2_KEY_3:
       case PS2_KEY_KP3:
         mode = 13;
-        modeSwitch = Ps2tohidLib.keyMacroMode("3", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(3, true);
         updateLastModes();
         break;
       case PS2_KEY_4:
       case PS2_KEY_KP4:
         mode = 14;
-        modeSwitch = Ps2tohidLib.keyMacroMode("4", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(4, true);
         updateLastModes();
         break;
       case PS2_KEY_5:
       case PS2_KEY_KP5:
         mode = 15;
-        modeSwitch = Ps2tohidLib.keyMacroMode("5", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(5, true);
         updateLastModes();
         break;
       case PS2_KEY_6:
       case PS2_KEY_KP6:
         mode = 16;
-        modeSwitch = Ps2tohidLib.keyMacroMode("6", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(6, true);
         updateLastModes();
         break;
       case PS2_KEY_7:
@@ -1080,38 +1038,38 @@ void loop()
         // keyboard modes with macros on SD card
       case 1:
         modeChangeDisplay(1, 2);
-        modeSwitch = Ps2tohidLib.keyMacroMode("1", false);
+        modeSwitch = Ps2tohidLib.keyMacroMode(1, false);
         updateLastModes();
         // keyMode0();
         break;
       case 2:
         modeChangeDisplay(2, 2);
-        modeSwitch = Ps2tohidLib.keyMacroMode("2", false);
+        modeSwitch = Ps2tohidLib.keyMacroMode(2, false);
         updateLastModes();
         // keyMode2();
         break;
       case 3:
         modeChangeDisplay(3, 2);
-        modeSwitch = Ps2tohidLib.keyMacroMode("3", false);
+        modeSwitch = Ps2tohidLib.keyMacroMode(3, false);
         updateLastModes();
         // keyMode3();
         break;
       case 4:
         modeChangeDisplay(4, 2);
-        modeSwitch = Ps2tohidLib.keyMacroMode("4", false);
+        modeSwitch = Ps2tohidLib.keyMacroMode(4, false);
         updateLastModes();
         // keyMode4();
         break;
       case 5:
         modeChangeDisplay(5, 2);
-        modeSwitch = Ps2tohidLib.keyMacroMode("5", false);
+        modeSwitch = Ps2tohidLib.keyMacroMode(5, false);
         updateLastModes();
         // modeSwitch = hexDecMode();
         // keyMode5();
         break;
       case 6:
         modeChangeDisplay(6, 2);
-        modeSwitch = Ps2tohidLib.keyMacroMode("6", false);
+        modeSwitch = Ps2tohidLib.keyMacroMode(6, false);
         updateLastModes();
         break;
 
@@ -1138,27 +1096,27 @@ void loop()
         // modeSwitch = Ps2tohidLib.keyMacroMode("9", currentNum);
         break;
       case 11:
-        modeSwitch = Ps2tohidLib.keyMacroMode("1", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(1, true);
         updateLastModes();
         break;
       case 12:
-        modeSwitch = Ps2tohidLib.keyMacroMode("2", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(2, true);
         updateLastModes();
         break;
       case 13:
-        modeSwitch = Ps2tohidLib.keyMacroMode("3", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(3, true);
         updateLastModes();
         break;
       case 14:
-        modeSwitch = Ps2tohidLib.keyMacroMode("4", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(4, true);
         updateLastModes();
         break;
       case 15:
-        modeSwitch = Ps2tohidLib.keyMacroMode("5", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(5, true);
         updateLastModes();
         break;
       case 16:
-        modeSwitch = Ps2tohidLib.keyMacroMode("6", true);
+        modeSwitch = Ps2tohidLib.keyMacroMode(6, true);
         updateLastModes();
         break;
       }
