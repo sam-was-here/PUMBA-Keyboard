@@ -34,29 +34,27 @@ public:
   Ps2tohid(int interval, int functionKey, byte flipScreen);
 
   const long interval = 60 * 1000;
-  void setSetting();    // get setting from sd card
-  void updateSetting(); // update current setting to sd card
+  void setSetting(); // get setting from sd card
+  // void updateSetting(); // update current setting to sd card
+
   void setLayout();
-  // Methods
+  void keyRebinder(int ScanCode, int keyCode, int layout, bool updateDS);
   void begin(int dataPin1, int clkPin2, int chipSelect, int i2cAdrs);
   int keyboardCheck();
   int functionKey;
   int usbCodes(int code, int layout);
   unsigned long _interval = 1000 * 60;
-  bool _modeSwitch = false;
-  // bool hexDecMode();
-  // int _solveHexDec(String currentHexDec);
   long keyPressDelay();
-  long _keyDelay;
-  void recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, bool deleteMacro, int speedChange);
-  bool playMacros(int ScanCode, String modeNum, bool sendCodes);
-  bool keyMacroMode(String modeName, bool calcFuncMode); // dafda
+  void recordMacros(int ScanCode, int modeNum, bool sendKeyCodes, bool deleteMacro, int speedChange);
+  bool playMacros(int ScanCode, int modeNum, bool sendCodes);
+  bool keyMacroMode(int modeName, bool calcFuncMode); // dafda
   bool sdStatus();
   String calcNum();
   void solveNum();
   void numSwitch();
   void calcMode(int code, String modeName);
   byte displayRotation();
+
   // all the layouts take about 1.2k of ram
   byte layout1[161];
   byte layout2[161];
@@ -96,7 +94,7 @@ public:
       41,   // #define PS2_KEY_ESC         0x1B
       42,   // #define PS2_KEY_BS          0x1C
       43,   // #define PS2_KEY_TAB         0x1D
-      40, // #define PS2_KEY_ENTER       0x1E
+      40,   // #define PS2_KEY_ENTER       0x1E
       44,   // #define PS2_KEY_SPACE       0x1F
       0x62, // #define PS2_KEY_KP0         0x20
       0x59, // #define PS2_KEY_KP1         0x21
@@ -232,10 +230,13 @@ public:
 
 private:
   unsigned long _previousMillis;
-  unsigned long _previousKeypress;
+  // unsigned long _previousKeypress;
   unsigned long _currentMillis;
-  int _code;
+  long _keyDelay; // the delay between the last 2 key presses/release. should make private
+
+  // int _code;    // should make local var
   bool _sdStatus = true;
+  // calc stuff
   String _lastNum;                // pereviens _currentNum that the op and _currentNum is used to get answer
   double _eq;                     // the valve that is the answer
   int _nextOp = 0;                // When you press a opertor when there already one, if will put it on after it solve the problem
@@ -244,13 +245,13 @@ private:
   int _decPoint = 6;              // max number of decmal point that are show in answer
   String _currentNum;             // string that hold the number that is being modiffy
   byte _displayRotation = 0;      // setting to see if the screen need to be flipped, true is normal
-  void _calcDelete();
-  bool _marcoKeyList[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
-  bool _marcoKeyList1[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
-  bool _marcoKeyList2[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
-  bool _marcoKeyList3[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
-  bool _marcoKeyList4[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
-  bool _marcoKeyList5[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
-  bool _marcoKeyList6[255];        // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  // void _calcDelete();
+  bool _marcoKeyList[255];  // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  bool _marcoKeyList1[255]; // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  bool _marcoKeyList2[255]; // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  bool _marcoKeyList3[255]; // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  bool _marcoKeyList4[255]; // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  bool _marcoKeyList5[255]; // the list of keys that have macros in the mode you are in. List is in HID scancodes
+  bool _marcoKeyList6[255]; // the list of keys that have macros in the mode you are in. List is in HID scancodes
 };
 #endif
