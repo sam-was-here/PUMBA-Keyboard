@@ -19,7 +19,7 @@ Here is a list of fetures the PUMBA-Keyboard has:
   * Forces numlock on so you dont always have to turn it on (do on startup and when modes are being changed)
   * Some other things but cant remenber
   * the abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
-  * WILL ADD SOON the ablity to change settings/key bindings without puting the sd card into a PC 
+  * The ablity to change key bindings without puting the SD card into a PC 
 
 
 PUMBA has only been test with SAMD21 and SAMD51 micro controll board. The project COULD work on most microcontroller that can emulate a HID device. It will not work on a Arduino leardo or Uno because the program takes to much ram. It has worked with almost all PS2 keyboards i have try. It will not work with most USB keyboard using a USB to PS2 adperter. the code was writen useing plateformio with the arduino framwork.
@@ -31,7 +31,7 @@ Tested Boards:
 
 There are PCB and cases for this project. You dont have to use the PCB, you can embend everything inside a keyboard or use a bread board. included is KiCad project files, pdf of the schmatic, pdf of the PCBs, and BOM.
 
-The PUMBA keyboard has 6 differnt keyboard modes wither there own layouts and macros on it. There are is one mode decacated just for the keyboard being just a calulator, but all Keyboard modes have the ablity for the numpad to become a calculator. There is also a hex and dec converter mode and another keyboard mode that cant use macros.WILL ADD SOON 
+The PUMBA keyboard has 6 differnt keyboard modes wither there own layouts and macros on it. There are is one mode decacated just for the keyboard being just a calulator, but all Keyboard modes have the ablity for the numpad to become a calculator. There is also a hex and dec converter mode and another keyboard mode that cant use macros. 
 
 When you plug in the PUMBA keyboard into a computer it will go into "Keyboard 1" mode. You switch modes by pressing the "function key" witch is defualt set to the menu button. after you press the function key the display will pop up things that you can do. To switch modes you press the corispnding key for the mode. if you press the function key again it will take you to the 2nd to last mode you are in.
 
@@ -47,11 +47,11 @@ list of key and what they do:
 * 9: calculator
 * 0: keyboard mode with no macros
 * Shift + 1-6: keyboard mode but the numpad is a calculator
-* Ctrl + 1-6: program macros for a key in the mode
+* Ctrl + 1-6: program macros/rebind keys for a key in the mode. on the diplay it will give instution on how to.
 
 controls for the calcultor:
-* Num Lock / Backspace: delates lest charitor
-* Scroll Lock: types the answer out in keystrocks
+* Num Lock / Backspace: delete lest char
+* Scroll Lock: types the answer out in key strokes
 * Delete: clears the current number, last number, and operator
 * =/enter: give the answer
 * /-+*. : does what they are
@@ -96,4 +96,6 @@ To change setting using the SD card. there is a exsample in the code folder
  3. Save changes to the file
  4. put sd card in to the PUMBA and then plug it in
 
-The Pumba now has the ablity to rebind keys per keyboard mode. to rebind the key you have to make a file called LAYOUT.TXT and put it in the mode you want to rebind the keys. the line number is the ps2lib key name and the number on the line is the hid scancode in decimal. in the code files the is a file called "default layout.txt" with is the default bind. you can copy the file and rename it and then modifly it to your needs. there is also the file called "layout cheatsheet.txt" that can help you too
+The Pumba now has the ablity to rebind keys per keyboard mode. to rebind the key you have to make a file called LAYOUT.TXT and put it in the mode you want to rebind the keys. the line number is the ps2lib key name and the number on the line is the hid scancode in decimal. In the code files the is a file called "default layout.txt" with is the default bind. you can copy the file and rename it and then modifly it to your needs. there is also the file called "layout cheatsheet.txt" that can help you too
+
+You can set macros or rebind almost any key on the keyboard in any of the 6 modes. there are a couple of exseptions like, scroll lock, and mayby num lock and pause break. Num lock and pause break key might work with macros, but I havent tested them and they wouldnt work with rebinds. 
