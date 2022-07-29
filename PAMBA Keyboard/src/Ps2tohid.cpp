@@ -28,12 +28,14 @@ PS2KeyAdvanced keyboard1;
 #include <Adafruit_SSD1306.h>
 
 // need to get from this info from begin funtion
-#define SCREEN_WIDTH 128    // OLED display width, in pixels
-#define SCREEN_HEIGHT 64    // OLED display height, in pixels
-#define OLED_RESET -1       // Reset pin # (or -1 if sharing Arduino reset pin)
-#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define OLED_RESET -1    // Reset pin # (or -1 if sharing Arduino reset pin)
+//#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+
 Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
+// initalized functions befor they are used
 void _macroFinder();
 int keyboardCheck();
 bool sdStatus();
@@ -42,12 +44,17 @@ void setLayout();
 
 // int _solveHexDec(String currentHexDec);
 
-// set a couple of peramiters. will mod later and can get info from SD card
-// these are defualts and can change depeinging on setting on SD card
-//
-// int interval       - the time in min that the screen withh turn off
-// int funcKey        - the key that is used as function key
-// bool flipScreen    - set the rotation of the screen, true means normal
+/*!
+    @brief  This constuter is used to set the defualt settings for the keyboard and gets things setted up. note all the setting can be change with the SD card.
+    @param  interval
+            The time in minuise that it takes for the display on the keyboard to turn
+            off to revent screen burn in.
+    @param  funcKey
+            This sets what key is used as the function key. The function key is used to switch modes, hult playing macros, and stop recording macros.
+    @param  flipScreen
+            This rotates the screen. 0 is normal and 2 is 180 degs
+    @note   Should call this befor other things in the lib and before setup. I should shang it to a function too.
+*/
 Ps2tohid::Ps2tohid(int interval, int funcKey = PS2_KEY_MENU, byte flipScreen = 0)
 {
   _interval = _interval * interval;
@@ -55,12 +62,19 @@ Ps2tohid::Ps2tohid(int interval, int funcKey = PS2_KEY_MENU, byte flipScreen = 0
   _displayRotation = flipScreen;
 }
 
-// intilaizeses the everything for the keyboard
-//
-// int dataPin1   - pin with keyboard data connected to
-// int clkPin2    - pin with keyboard clock connected to
-// int chipSelect - pin with SD select connected to
-void Ps2tohid::begin(int dataPin1, int clkPin2, int chipSelect, int i2cAdrs)
+/*!
+    @brief  This function initallizes everything and should only run 1 time in the setup.
+    @param  dataPin1
+            The pin the data line of the PS2 keyboard is connected.
+    @param  clkPin2
+            The pin the clock line of the PS2 keyboard is connected.
+    @param  chipSelect
+            The pin the SD card chipselect is connected to.
+    @param  i2cAdrs
+            The I2C address of the diaplay. Default is 0x3C
+    @note
+*/
+void Ps2tohid::begin(int dataPin1, int clkPin2, int chipSelect, int i2cAdrs = 0x3C)
 {
   keyboard1.begin(dataPin1, clkPin2);
   // Serial.begin(115200);
@@ -71,9 +85,11 @@ void Ps2tohid::begin(int dataPin1, int clkPin2, int chipSelect, int i2cAdrs)
   // getting setting from sd card
   // if (_sdStatus)
   // {
-    setSetting();
-    setLayout();
-  // }
+  setSetting();
+  setLayout();
+  // }.
+  BootKeyboard.releaseAll(); // release all keys when plug in keyboard, sometimes some keys are press  when they are not
+
 }
 
 // return true if SD card was plug in when the keyboard was powered up
@@ -82,11 +98,15 @@ bool Ps2tohid::sdStatus()
   return _sdStatus;
 }
 
+// returns the rotaction of the display
 byte Ps2tohid::displayRotation()
 {
   return _displayRotation;
 }
 
+/* This function sets all the libary settings to the settings that are stored on the SD card.
+If a setting is not stored on the SD card, it will use the defualt settings.
+*/
 void Ps2tohid::setSetting()
 {
   if (!_sdStatus) // breaks if no sd card in
@@ -106,13 +126,10 @@ void Ps2tohid::setSetting()
         // test to see if line don't have #, # is a comment
         if (!buffer.startsWith("#"))
         {
-          // Serial.println("should run 3 times");
           //  splits buffer it to the 2 parts. name and data parts, splits by =
           int breakIdx = buffer.indexOf('=');                  // the point the data is splited
           String settingName = buffer.substring(0, breakIdx);  // the name of the setting
           String settingData = buffer.substring(breakIdx + 1); // value of the setting
-          // Serial.println(settingName);
-          // Serial.println(settingData);
 
           if (settingName.equalsIgnoreCase("sleep")) // sleep timer
           {
@@ -209,12 +226,10 @@ void Ps2tohid::setSetting()
   }
   delay(100);
 }
-void Ps2tohid::updateSetting()
-{
-  if (!_sdStatus) // breaks if no sd card in
-    return;
-}
 
+/* Updates the key layout on the micro to the layout stored on the SD card.
+  If it cant find a layout file on SD card, it will use the default layout.
+*/
 void Ps2tohid::setLayout()
 {
   bool _modesWLayout[7] = {0, 0, 0, 0, 0, 0, 0}; // need to be 7 and not 6 because indexing of arrey starts at 0 and the array index is the folder the file is in
@@ -240,7 +255,7 @@ void Ps2tohid::setLayout()
       // If the file is available, read it
       if (dataFile)
       {
-        for (int n = 0; n <= 160; n++)    // runs only 161 times
+        for (int n = 0; n <= 160; n++) // runs only 161 times
         {
           if (!dataFile.available()) // if the file was not complet it will not put random stuff as keybindings, it will unbind the rest of the keys
           {
@@ -253,22 +268,22 @@ void Ps2tohid::setLayout()
             switch (i)
             {
             case 1:
-                layout1[n] = rawDateInt;
+              layout1[n] = rawDateInt;
               break;
             case 2:
-                layout2[n] = rawDateInt;
+              layout2[n] = rawDateInt;
               break;
             case 3:
-                layout3[n] = rawDateInt;
+              layout3[n] = rawDateInt;
               break;
             case 4:
-                layout4[n] = rawDateInt;
+              layout4[n] = rawDateInt;
               break;
             case 5:
-                layout5[n] = rawDateInt;
+              layout5[n] = rawDateInt;
               break;
             case 6:
-                layout6[n] = rawDateInt;
+              layout6[n] = rawDateInt;
               break;
             }
           }
@@ -276,7 +291,7 @@ void Ps2tohid::setLayout()
         dataFile.close();
       }
     }
-    else // if there is no sd card or the mode dont have a layout this will make it the defualt layout
+    else // if there is no sd card or the mode dont have a layout, this will make it the defualt layout
     {
       switch (i)
       {
@@ -321,11 +336,118 @@ void Ps2tohid::setLayout()
   }
 }
 
-/*
-  function checks to see if a PS2 scancode was sent and then reuturn the scancode.
-  return 0 if there was no scancodes,
-  return -1 is function key was press,
-  return -2 if sleep timeout
+/*!
+    @brief  This function is used to rebind a mod key. This is store on a file on the SD card.
+    @param  ScanCode
+            HID scancode you want to bind the PS2 scancode
+    @param  keyCode
+            The PS2 scancode of the key that you want to change to translation to the HID scancode
+    @param  layout
+            Name of the mode the keyboard is in, and is the layout that this will effect.
+    @param  updateSD
+            When true, will update layout on SD card. When false only update the array for the layout
+    @note
+*/
+void Ps2tohid::keyRebinder(int ScanCode, int keyCode, int layout, bool updateSD)
+{
+  if (!_sdStatus) // breaks if no sd card in
+  {
+    return;
+  }
+  // setLayout(); // update the arrays of the layouts from SD card
+
+  String fileName = String(String(layout) + '/' + "LAYOUT.TXT");
+
+  // check to see if the layout file exists, if does it will remove it
+  if (SD.exists(fileName))
+  {
+    SD.remove(fileName);
+  }
+
+  // see if dir exist, if not will make it
+  if (!(SD.exists(String(layout) + '/')))
+  {
+    SD.mkdir(String(layout) + '/');
+  }
+
+  // make and open new layout file
+  File dataFile = SD.open(fileName, FILE_WRITE);
+
+  switch (layout) //  make the changes to the layout arrays that is wanted to change
+  {
+  case 1:
+    layout1[keyCode & 0xFF] = ScanCode; // update the key binding
+    if (updateSD)                       // only update the sd card when flag is true
+    {
+      for (int i = 0; i <= 160; i++) // loop through the array and prints it out on the SD card
+      {
+        dataFile.println(String(layout1[i]));
+      }
+    }
+    break;
+  case 2:
+    layout2[keyCode & 0xFF] = ScanCode;
+    if (updateSD) // only update the sd card when flag is true
+    {
+      for (int i = 0; i <= 160; i++)
+      {
+        dataFile.println(String(layout2[i]));
+      }
+    }
+    break;
+  case 3:
+    layout3[keyCode & 0xFF] = ScanCode;
+    if (updateSD) // only update the sd card when flag is true
+    {
+      for (int i = 0; i <= 160; i++)
+      {
+        dataFile.println(String(layout3[i]));
+      }
+    }
+    break;
+  case 4:
+    layout4[keyCode & 0xFF] = ScanCode;
+    if (updateSD) // only update the sd card when flag is true
+    {
+      for (int i = 0; i <= 160; i++)
+      {
+        dataFile.println(String(layout4[i]));
+      }
+    }
+    break;
+  case 5:
+    layout5[keyCode & 0xFF] = ScanCode;
+    if (updateSD) // only update the sd card when flag is true
+    {
+      for (int i = 0; i <= 160; i++)
+      {
+        dataFile.println(String(layout5[i]));
+      }
+    }
+    break;
+  case 6:
+    layout6[keyCode & 0xFF] = ScanCode;
+    if (updateSD) // only update the sd card when flag is true
+    {
+      for (int i = 0; i <= 160; i++)
+      {
+        dataFile.println(String(layout6[i]));
+      }
+    }
+    break;
+  }
+
+  dataFile.close(); // close the file on SD card
+}
+
+/*!
+    @brief  This function is used to check if there has been a keypress from the PS2 keyboard.
+    @return
+            Positive Number - the scancode of the key that was press/release.
+            0  - No keypresses.
+            -1 - Function key was press.
+            -2 - If it has reach the sleep timeout.
+    @note
 */
 int Ps2tohid::keyboardCheck()
 {
@@ -333,7 +455,7 @@ int Ps2tohid::keyboardCheck()
   if (keyboard1.available())
   {
     // read the next key
-    _code = keyboard1.read();
+    int _code = keyboard1.read(); // could change _code to uint16_t
     if ((_code & 0xFF) > 0)
     {
       _keyDelay = _previousMillis - _currentMillis;
@@ -443,20 +565,21 @@ void Ps2tohid::numSwitch()
   }
 }
 
-void Ps2tohid::_calcDelete()
-{
+// // used to delete the last thing in the cal, this is not used
+// void Ps2tohid::_calcDelete()
+// {
 
-  if (_currentNum.length() == 0)
-  {                         // see if currrent num is emptue
-    _op = 0;                // when current num is empty set op to zere
-    _currentNum = _lastNum; // and switch to current num to last num
-    _lastNum = "";
-  }
-  else
-  {
-    _currentNum.remove(_currentNum.length() - 1, 1); // deletes last char in currnt num
-  }
-}
+//   if (_currentNum.length() == 0)
+//   {                         // see if currrent num is emptue
+//     _op = 0;                // when current num is empty set op to zere
+//     _currentNum = _lastNum; // and switch to current num to last num
+//     _lastNum = "";
+//   }
+//   else
+//   {
+//     _currentNum.remove(_currentNum.length() - 1, 1); // deletes last char in currnt num
+//   }
+// }
 
 // Turns keyboard in to a calculator. give it the PS2 scancode and the mode name
 void Ps2tohid::calcMode(int code, String modeName)
@@ -665,11 +788,21 @@ String Ps2tohid::calcNum()
 
 // This function convernts the PS2 scan codes to usb HID scan codes
 // later change it to arrays and then have perma for differnt layouts. differnt array can be stored on sd card
-int Ps2tohid::usbCodes(int code, int layout)
+
+/*!
+    @brief  This function converts the PS2 scancodes into the HID scancodes
+    @param  code
+            The PS2 scancode that is converted to a HID scancode.
+    @param  layout
+            What layout that is used in the convertion, default is 0
+    @return HID scancode
+    @note
+*/
+int Ps2tohid::usbCodes(int code, int layout = 0)
 {
   int usbCode = 0;
 
-  switch (layout)
+  switch (layout) // switch between differnt layouts
   {
   case 1:
     usbCode = layout1[code & 0xFF];
@@ -695,344 +828,35 @@ int Ps2tohid::usbCodes(int code, int layout)
     break;
   }
   return usbCode;
-  // int usbCode = 0;
-  // switch (code & 0xFF)
-  // {
-  // case PS2_KEY_PAUSE:
-  //   usbCode = 0x48;
-  //   break;
-  // case PS2_KEY_LANG1: // num lock
-  //   usbCode = 0x53;
-  //   break;
-  // case PS2_KEY_LANG2: // scroll lock
-  //   usbCode = 0x47;
-  //   break;
-  // case PS2_KEY_LANG3: // cap lock
-  //   usbCode = 0x39;
-  //   break;
-  // case PS2_KEY_L_SHIFT:
-  //   usbCode = 0xE1;
-  //   break;
-  // case PS2_KEY_R_SHIFT:
-  //   usbCode = 0xE5;
-  //   break;
-  // case PS2_KEY_L_CTRL:
-  //   usbCode = 0xE0;
-  //   break;
-  // case PS2_KEY_R_CTRL:
-  //   usbCode = 0xE4;
-  //   break;
-  // case PS2_KEY_L_ALT:
-  //   usbCode = 0xE2;
-  //   break;
-  // case PS2_KEY_R_ALT:
-  //   usbCode = 0xE6;
-  //   break;
-  // case PS2_KEY_A:
-  //   usbCode = 4;
-  //   break;
-  // case PS2_KEY_B:
-  //   usbCode = 5;
-  //   break;
-  // case PS2_KEY_C:
-  //   usbCode = 6;
-  //   break;
-  // case PS2_KEY_D:
-  //   usbCode = 7;
-  //   break;
-  // case PS2_KEY_E:
-  //   usbCode = 8;
-  //   break;
-  // case PS2_KEY_F:
-  //   usbCode = 9;
-  //   break;
-  // case PS2_KEY_G:
-  //   usbCode = 10;
-  //   break;
-  // case PS2_KEY_H:
-  //   usbCode = 11;
-  //   break;
-  // case PS2_KEY_I:
-  //   usbCode = 12;
-  //   break;
-  // case PS2_KEY_J:
-  //   usbCode = 13;
-  //   break;
-  // case PS2_KEY_K:
-  //   usbCode = 14;
-  //   break;
-  // case PS2_KEY_L:
-  //   usbCode = 15;
-  //   break;
-  // case PS2_KEY_M:
-  //   usbCode = 16;
-  //   break;
-  // case PS2_KEY_N:
-  //   usbCode = 17;
-  //   break;
-  // case PS2_KEY_O:
-  //   usbCode = 18;
-  //   break;
-  // case PS2_KEY_P:
-  //   usbCode = 19;
-  //   break;
-  // case PS2_KEY_Q:
-  //   usbCode = 20;
-  //   break;
-  // case PS2_KEY_R:
-  //   usbCode = 21;
-  //   break;
-  // case PS2_KEY_S:
-  //   usbCode = 22;
-  //   break;
-  // case PS2_KEY_T:
-  //   usbCode = 23;
-  //   break;
-  // case PS2_KEY_U:
-  //   usbCode = 24;
-  //   break;
-  // case PS2_KEY_V:
-  //   usbCode = 25;
-  //   break;
-  // case PS2_KEY_W:
-  //   usbCode = 26;
-  //   break;
-  // case PS2_KEY_X:
-  //   usbCode = 27;
-  //   break;
-  // case PS2_KEY_Y:
-  //   usbCode = 28;
-  //   break;
-  // case PS2_KEY_Z:
-  //   usbCode = 29;
-  //   break;
-  // case PS2_KEY_KP0:
-  //   usbCode = 0x62;
-  //   break;
-  // case PS2_KEY_0:
-  //   usbCode = 39;
-  //   break;
-  // case PS2_KEY_KP1:
-  //   usbCode = 0x59;
-  //   break;
-  // case PS2_KEY_1:
-  //   usbCode = 30;
-  //   break;
-  // case PS2_KEY_KP2:
-  //   usbCode = 0x5A;
-  //   break;
-  // case PS2_KEY_2:
-  //   usbCode = 31;
-  //   break;
-  // case PS2_KEY_KP3:
-  //   usbCode = 0x5B;
-  //   break;
-  // case PS2_KEY_3:
-  //   usbCode = 32;
-  //   break;
-  // case PS2_KEY_KP4:
-  //   usbCode = 0x5C;
-  //   break;
-  // case PS2_KEY_4:
-  //   usbCode = 33;
-  //   break;
-  // case PS2_KEY_KP5:
-  //   usbCode = 0x5D;
-  //   break;
-  // case PS2_KEY_5:
-  //   usbCode = 34;
-  //   break;
-  // case PS2_KEY_KP6:
-  //   usbCode = 0x5E;
-  //   break;
-  // case PS2_KEY_6:
-  //   usbCode = 35;
-  //   break;
-  // case PS2_KEY_KP7:
-  //   usbCode = 0x5F;
-  //   break;
-  // case PS2_KEY_7:
-  //   usbCode = 36;
-  //   break;
-  // case PS2_KEY_KP8:
-  //   usbCode = 0x60;
-  //   break;
-  // case PS2_KEY_8:
-  //   usbCode = 37;
-  //   break;
-  // case PS2_KEY_KP9:
-  //   usbCode = 0x61;
-  //   break;
-  // case PS2_KEY_9:
-  //   usbCode = 38;
-  //   break;
-  // case PS2_KEY_TAB:
-  //   usbCode = 43;
-  //   break;
-  // case PS2_KEY_INSERT:
-  //   usbCode = 0x49;
-  //   break;
-  // case PS2_KEY_BS:
-  //   usbCode = 42;
-  //   break;
-  // case PS2_KEY_KP_ENTER:
-  //   usbCode = 0x58;
-  //   break;
-  // case PS2_KEY_ENTER:
-  //   usbCode = 40;
-  //   break;
-  // case PS2_KEY_PGDN:
-  //   usbCode = 0x4E;
-  //   break;
-  // case PS2_KEY_PGUP:
-  //   usbCode = 0x4B;
-  //   break;
-  // case PS2_KEY_L_ARROW:
-  //   usbCode = 0x50;
-  //   break;
-  // case PS2_KEY_R_ARROW:
-  //   usbCode = 0x4F;
-  //   break;
-  // case PS2_KEY_UP_ARROW:
-  //   usbCode = 0x52;
-  //   break;
-  // case PS2_KEY_DN_ARROW:
-  //   usbCode = 0x51;
-  //   break;
-  // case PS2_KEY_DELETE:
-  //   usbCode = 0x4C;
-  //   break;
-  // case PS2_KEY_HOME:
-  //   usbCode = 0x4A;
-  //   break;
-  // case PS2_KEY_END:
-  //   usbCode = 0x4D;
-  //   break;
-  // case PS2_KEY_R_GUI:
-  //   usbCode = 0xE7;
-  //   break;
-  // case PS2_KEY_L_GUI:
-  //   usbCode = 0xE3;
-  //   break;
-  // case PS2_KEY_F1:
-  //   usbCode = 0x3A;
-  //   break;
-  // case PS2_KEY_F2:
-  //   usbCode = 0x3B;
-  //   break;
-  // case PS2_KEY_F3:
-  //   usbCode = 0x3C;
-  //   break;
-  // case PS2_KEY_F4:
-  //   usbCode = 0x3D;
-  //   break;
-  // case PS2_KEY_F5:
-  //   usbCode = 0x3E;
-  //   break;
-  // case PS2_KEY_F6:
-  //   usbCode = 0x3F;
-  //   break;
-  // case PS2_KEY_F7:
-  //   usbCode = 0x40;
-  //   break;
-  // case PS2_KEY_F8:
-  //   usbCode = 0x41;
-  //   break;
-  // case PS2_KEY_F9:
-  //   usbCode = 0x42;
-  //   break;
-  // case PS2_KEY_F10:
-  //   usbCode = 0x43;
-  //   break;
-  // case PS2_KEY_F11:
-  //   usbCode = 0x44;
-  //   break;
-  // case PS2_KEY_F12:
-  //   usbCode = 0x45;
-  //   break;
-  // case PS2_KEY_PRTSCR:
-  //   usbCode = 0x46;
-  //   break;
-  // case PS2_KEY_ESC:
-  //   usbCode = 41;
-  //   break;
-  // case PS2_KEY_SPACE:
-  //   usbCode = 44;
-  //   break;
-  // case PS2_KEY_EQUAL:
-  //   usbCode = 46;
-  //   break;
-  // case PS2_KEY_SEMI:
-  //   usbCode = 51;
-  //   break;
-  // case PS2_KEY_COMMA:
-  //   usbCode = 54;
-  //   break;
-  // case PS2_KEY_KP_MINUS:
-  //   usbCode = 0x56;
-  //   break;
-  // case PS2_KEY_MINUS:
-  //   usbCode = 45;
-  //   break;
-  // case PS2_KEY_KP_DOT:
-  //   usbCode = 0x63;
-  //   break;
-  // case PS2_KEY_DOT:
-  //   usbCode = 55;
-  //   break;
-  // case PS2_KEY_KP_DIV:
-  //   usbCode = 0x54;
-  //   break;
-  // case PS2_KEY_DIV:
-  //   usbCode = 56;
-  //   break;
-  // case PS2_KEY_KP_PLUS:
-  //   usbCode = 0x57;
-  //   break;
-  // case PS2_KEY_KP_TIMES:
-  //   usbCode = 0x55;
-  //   break;
-  // case PS2_KEY_BACK:
-  //   usbCode = 49;
-  //   break;
-  // case PS2_KEY_OPEN_SQ:
-  //   usbCode = 0x2F;
-  //   break;
-  // case PS2_KEY_CLOSE_SQ:
-  //   usbCode = 0x30;
-  //   break;
-  // case PS2_KEY_APOS: // single quaouts
-  //   usbCode = 52;
-  //   break;
-  // case PS2_KEY_SINGLE: // tilde
-  //   usbCode = 53;
-  //   break;
-  // case PS2_KEY_MENU:
-  //   usbCode = 0x65;
-  // }
-  // return usbCode;
 }
 
-/* This functions is used for recoading, make, or deleting macros
+/*!
+  @brief This functions is used for recoading, make, or deleting macros. The function key is used to end the recording.
 
-  int ScanCode - scancode (HID) of the key the macro is for
+  @param ScanCode
+          scancode (HID) of the key the macro is for
 
-  String modeNum - the mode number of the mode the macro is for
-    the macor is located on SD card at modeNum folder in ScanCode file
+  @param modeNum
+  The mode number of the mode the macro is for
+  the macro is located on SD card at modeNum folder in ScanCode file. This is a STRING.
 
-  bool sendKeyCodes - if true then the keyboard will sent scancodes to connected device
+  @param sendKeyCodes If true then the keyboard will sent scancodes to connected device.
 
-  bool deleteMacro - delects the macro files so there is no more macors on the key.
+  @param deleteMacro Delects the macro files so there is no more macors on the key for the given mode.
 
-  int speedChange - speed multiplyer. didvides the delay between scancodes, so you can play back macros faster.
-        set speedChange to 1 for no change in delays
+  @param speedChange Speed multiplyer. Didvides the delay between scancodes, so you can play back macros faster.
+        set speedChange to 1 for no change in delays. Defualt is 1.
+  @note
 */
-void Ps2tohid::recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, bool deleteMacro, int speedChange = 1)
+void Ps2tohid::recordMacros(int ScanCode, int modeNum, bool sendKeyCodes, bool deleteMacro, int speedChange = 1)
 {
+  String modeName = String(modeNum);
   if (speedChange <= 0)
+  {
     speedChange = 1;
+  }
   // filename is the dir + file name of the macro
-  String fileName = String(modeNum + '/' + String(ScanCode) + ".TXT");
+  String fileName = String(modeName + '/' + String(ScanCode) + ".TXT");
   // if there is already a macro, it will delete it
   if (SD.exists(fileName))
   {
@@ -1050,16 +874,16 @@ void Ps2tohid::recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, boo
     return;
   }
   // if there is no dir, it will make one
-  if (!(SD.exists(modeNum + '/')))
+  if (!(SD.exists(modeName + '/')))
   {
-    SD.mkdir(modeNum + '/');
+    SD.mkdir(modeName + '/');
   }
 
   bool removeDelay = true;
-  // open file
+  // open file_calcDelete
   File dataFile = SD.open(fileName, FILE_WRITE);
 
-  _code = keyboardCheck();
+  int _code = keyboardCheck();
   // wait for keypress before recording macros
   // this is for when you play back a macro, there is no delay after you press the key
   while (_code == 0)
@@ -1078,7 +902,7 @@ void Ps2tohid::recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, boo
       // if the file is available, write to it:
 
       delayString += String(_keyDelay / speedChange);
-      int usbScanCodes = usbCodes(_code, modeNum.toInt());
+      int usbScanCodes = usbCodes(_code, modeNum);
 
       if (!(_code & PS2_BREAK))
       {
@@ -1117,33 +941,37 @@ void Ps2tohid::recordMacros(int ScanCode, String modeNum, bool sendKeyCodes, boo
   setSetting(); // update setting after adding macro
 }
 
-// test to see if there is a macro for a key that is presses
-// testes to see if the file is on SD card
-bool Ps2tohid::playMacros(int ScanCode, String modeNum, bool sendCodes)
+/*!
+  @brief This function plays back a macro if the key that was press has one, only press not release. it checks the SD card for the macros.
+
+  @param ScanCode The HID scancode that is used to check if there is a macros with the same name
+
+  @param modeNum Name of the mode the keyboard is in.
+
+  @param sendCodes if true it will play the macro back if the key has one. false will not play the macro if there is one
+
+  @return true if there is a macro for the key, false if there are not macros for the key
+
+  @note
+*/
+bool Ps2tohid::playMacros(int ScanCode, int modeNum, bool sendCodes)
 {
 
   if (_marcoKeyList[ScanCode] == false)
   { // check to see if the key has a macro, if not then return function
     return false;
   }
-  else if (!(sendCodes)) // ?
-  {                      // if you use function toto see if
-    return true;
+  else if (!(sendCodes)) //
+  {
+    return true; // if a key has macro and sendCode false, reuturn true, usfull for key releases
   }
-
-  // redunt may remove
-  String fileName = String(modeNum + '/' + String(ScanCode));
-  if (!(SD.exists(modeNum + "/" + String(ScanCode) + ".TXT")))
+  else if (!(SD.exists(String(modeNum) + "/" + String(ScanCode) + ".TXT"))) // double check to see if it is still there or something
   {
     return false;
   }
-  else if (!(sendCodes)) // ?
-  {                      // if you use function toto see if
-    return true;
-  }
 
   String buffer;
-  File dataFile = SD.open(modeNum + "/" + String(ScanCode) + ".TXT");
+  File dataFile = SD.open(String(modeNum) + "/" + String(ScanCode) + ".TXT");
 
   // If the file is available, read it
   if (dataFile)
@@ -1182,27 +1010,28 @@ bool Ps2tohid::playMacros(int ScanCode, String modeNum, bool sendCodes)
   return true;
 }
 
-/* This function is for differnt keyboard modes with differnt macros
+/*!
+  @brief This function runs most of the diffent modes on the keyboard. It acts like a normal usb keyboard, unless a key has a macro on, then it plays the macro binded to the key.
 
-String modeName - The mode number the keyboard is in.
- it corrispons with the that modes macros
+  @param modeName Name of the mode the keyboard is in. 1-6
 
-bool calcFuncMode - if true then the num pad will be a calculator
+  @param calcFuncMode Name of the mode the keyboard is in. False maen numpad is normal, true means numpad is calc.
 
-returns true if function key is press
-returns false if keyboard has reach screen timeout
+  @return True when switch modes. False to got to sleep.
+
+  @note
 */
-bool Ps2tohid::keyMacroMode(String modeName, bool calcFuncMode)
+bool Ps2tohid::keyMacroMode(int modeName, bool calcFuncMode = false)
 {
   bool switchModes = true;
   int usbPress;
   int keyboardCode = 0;
   if (calcFuncMode)
   {
-    calcMode(keyboardCode, "Calc+Key " + modeName);
+    calcMode(keyboardCode, "Calc+Key " + String(modeName));
   }
 
-  switch (modeName.toInt())
+  switch (modeName)
   {
   case 1:
     for (int i = 0; i <= 254; i++)
@@ -1278,7 +1107,7 @@ bool Ps2tohid::keyMacroMode(String modeName, bool calcFuncMode)
         case PS2_KEY_KP_MINUS:
         case PS2_KEY_KP_EQUAL:
         case PS2_KEY_KP_ENTER:
-          calcMode(keyboardCode, "Calc+Key " + modeName);
+          calcMode(keyboardCode, "Calc+Key " + String(modeName));
           keyboardCode = 0;
           break;
         }
@@ -1313,47 +1142,51 @@ bool Ps2tohid::keyMacroMode(String modeName, bool calcFuncMode)
 
     if (keyboardCode > 0)
     {
-      usbPress = usbCodes(keyboardCode, modeName.toInt());
+      usbPress = usbCodes(keyboardCode, modeName);
       if (!(keyboardCode & PS2_BREAK))
       { // see if key is press
 
         if (!(playMacros(usbPress, modeName, true))) // see if there is a macro on sd card for a key that was just pressed
         {
-          switch (usbPress)
-          {
-          case 0x53: // num lock, use to print what is in calculater
-            // i dont know why but this allways run (when num lock press) even if its not support to
-            if (calcFuncMode)
-            {
-              calcMode(0x96, "Calc+Key " + modeName);
-              //_calcDelete();
+          if (usbPress == 0x47 || usbPress == 0x53)
+          { // check to see if scroll/num lock are press
+            if (usbPress == 0x53)
+            { // if num lock press
+              if (!calcFuncMode)
+              {
+                BootKeyboard.press(KeyboardKeycode(usbPress)); // release the key when not in calc mode
+              }
+              else
+              {
+                calcMode(0x96, "Calc+Key " + String(modeName));
+              }
             }
-            break;
-          case 0x39: // cap lock, do nothing
-            break;
-          case 0x47: // scroll lock, use to print what is in calculater
-            BootKeyboard.print(_currentNum);
-            break;
-          default:
+            else
+            {
+              BootKeyboard.print(_currentNum);
+            }
+          }
+          else
+          {                                                // normall key are press as normal
             BootKeyboard.press(KeyboardKeycode(usbPress)); // press the key
           }
         }
       }
       else
-      { // see if key is not press it will release key
-        if (!(playMacros(usbPress, modeName, false)))
+      {                                               // see if key is not press it will release key
+        if (!(playMacros(usbPress, modeName, false))) // if there is a macro for the key that was release, it will not sent a key release scancode
         {
-          switch (usbPress)
+          if (usbPress == 0x47 || usbPress == 0x53)
+          { // check to see if scroll/num lock are press
+            if (usbPress == 0x53 && !calcFuncMode)
+            {
+              BootKeyboard.release(KeyboardKeycode(usbPress)); // release the key when not in calc mode
+            }
+            // not press any keys
+          }
+          else
           {
-          case 0x53: // num lock, use to print what iis in calculater
-            // Keyboard.print(_currentNum);
-            break;
-          case 0x39: // cap lock, do nothing
-            break;
-          case 0x47: // scroll lock, do nothing
-            break;
-          default:
-            BootKeyboard.release(KeyboardKeycode(usbPress)); // release the key
+            BootKeyboard.release(KeyboardKeycode(usbPress)); // press the key
           }
         }
       }
