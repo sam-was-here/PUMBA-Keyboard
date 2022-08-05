@@ -1,7 +1,0 @@
-#this is a test to see if storing var in files work. must put this file in setting folder
-# sleep - the time it take the screen to turn off after late key press in min
-sleep=30
-# fnkey - what key is used to change modes, defual is menu key which is 14
-fnkey=14
-# rotation - the rotation of the display. 0 is normal, 2 is 180 degress
-rotation=0
