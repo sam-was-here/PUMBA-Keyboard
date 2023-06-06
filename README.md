@@ -1,101 +1,118 @@
 # PUMBA-Keyboard
-PUMBA-Keyboard is a PS2 to USB macro board adapter made with the arduino framework.
 
-PUMBA stands for: PS2 to USB Macro Board Adpter
+PUMBA-Keyboard is a PS2 to USB macro board adapter created using the Arduino framework.
 
-WARNING: code mostly done, but a lot of work is need on documention. There are a lot of spelling/grammer mistakes and still need to add stuff to the repo.
+PUMBA stands for PS2 to USB Macro Board Adapter.
 
-This is an arduino project that converts a PS2 keyboard into an USB keyaboard with addital fetures. It has has a built in calacultor and the abilty to make/playback macros. It had a small display on it to display differnt things. 
+**WARNING**: The code is mostly complete, but there is still a lot of work needed for documentation. There are many spelling and grammar mistakes, and additional content needs to be added to the repository.
 
-![IMG_20220626_191421](https://user-images.githubusercontent.com/102840190/175848182-f5005b3c-a151-4c44-8dc3-c826e4afac13.jpg)
+## Description
 
-Here is a list of fetures the PUMBA-Keyboard has:
-  * 6 differnt keyboards modes in which nearly all keys can have a differnt macro asign to it.
-  * The ablity to easly make macros on the fly without any PC software
-  * All setting/macros are stored on the SD card so you can easyly modifly/backup them.
-  * Calculater mode that turns part or the whole keyboard in to calculate and send results as keypresses
-  * In any of the 6 keyboard modes you can convert the numpad into a calculter and leave the rest of the keyboard alown 
-  * Hex and Dec converter mode
-  * Forces numlock on so you dont always have to turn it on (do on startup and when modes are being changed)
-  * Some other things but cant remenber
-  * the abilty to rebind keys and have differnt key layouts per keyboard mode (half way done)
-  * The ablity to change key bindings without puting the SD card into a PC 
+PUMBA-Keyboard is an Arduino project that converts a PS2 keyboard into a USB keyboard with additional features. It includes a built-in calculator and the ability to create and playback macros. The board also has a small display for showing different information.
 
+![PUMBA-Keyboard](https://user-images.githubusercontent.com/102840190/175848182-f5005b3c-a151-4c44-8dc3-c826e4afac13.jpg)
 
-PUMBA has only been test with SAMD21 and SAMD51 micro controll board. The project COULD work on most microcontroller that can emulate a HID device. It will not work on a Arduino leardo or Uno because the program takes to much ram. It has worked with almost all PS2 keyboards i have try. It will not work with most USB keyboard using a USB to PS2 adperter. the code was writen useing plateformio with the arduino framwork.
+### Features
+Here is a list of features offered by PUMBA-Keyboard:
+* Six different keyboard modes, allowing each key to have a different assigned macro.
+* Easy on-the-fly macro creation without the need for PC software.
+* All settings and macros are stored on the SD card, making modification and backup effortless.
+* Calculator mode that turns a part or the whole keyboard into a calculator, sending results as keypresses.
+* Numpad can be converted into a calculator in any of the six keyboard modes while leaving the rest of the keyboard untouched.
+* Hex and decimal converter mode.
+* Numlock is automatically enabled during startup and mode changes.
+* Ability to rebind keys and have different key layouts for each keyboard mode (partially implemented).
+* Key bindings can be changed without requiring the SD card to be inserted into a PC.
+
+## Compatibility
+
+PUMBA has been tested with SAMD21 and SAMD51 microcontroller boards. The project may work with most microcontrollers capable of emulating a HID device. However, it is not compatible with Arduino Leonardo or Uno boards due to limited available RAM. Most PS2 keyboards have been tested successfully, but it may not work with USB keyboards using a USB to PS2 adapter. The code was written using PlatformIO with the Arduino framework.
 
 Tested Boards:
 * Adafruit Feather M4 Express
 * Adafruit QT Py SAMD21
 * Seeeduino Xiao
 
-There are PCB and cases for this project. You dont have to use the PCB, you can embend everything inside a keyboard or use a bread board. included is KiCad project files, pdf of the schmatic, pdf of the PCBs, and BOM.
+## PCB and Cases
 
-The PUMBA keyboard has 6 differnt keyboard modes wither there own layouts and macros on it. There are is one mode decacated just for the keyboard being just a calulator, but all Keyboard modes have the ablity for the numpad to become a calculator. There is also a hex and dec converter mode and another keyboard mode that cant use macros. 
+PCB and case designs are available for this project. However, they are not mandatory, as you can integrate everything inside a keyboard or use a breadboard. The repository includes KiCad project files, PDFs of the schematic, PCBs, and a bill of materials (BOM).
 
-When you plug in the PUMBA keyboard into a computer it will go into "Keyboard 1" mode. You switch modes by pressing the "function key" witch is defualt set to the menu button. after you press the function key the display will pop up things that you can do. To switch modes you press the corispnding key for the mode. if you press the function key again it will take you to the 2nd to last mode you are in.
+## Keyboard Modes
 
-list of key and what they do:
-* 1: Keyboard 1 
+The PUMBA keyboard offers six different keyboard modes, each with its own layouts and macros. One mode is dedicated to functioning solely as a calculator, but all keyboard modes can activate the numpad as a calculator. Another mode is a hex and decimal converter, while one keyboard mode does not support macros.
+
+When the PUMBA keyboard is plugged into a computer, it automatically enters "Keyboard 1" mode. You can switch between modes by pressing the "function key," which is set as the default to the menu button. After pressing the function key, the display shows available actions. To switch modes, press the corresponding key for the desired mode. Pressing the function key again takes you to the second-to-last mode.
+
+### Key Assignments
+Here is a list of key assignments for mode switching:
+* 1: Keyboard 1
 * 2: Keyboard 2
 * 3: Keyboard 3
 * 4: Keyboard 4
 * 5: Keyboard 5
 * 6: Keyboard 6
-* 7: 
-* 8: Hex and dec converter
-* 9: calculator
-* 0: keyboard mode with no macros
-* Shift + 1-6: keyboard mode but the numpad is a calculator
-* Ctrl + 1-6: program macros/rebind keys for a key in the mode. on the diplay it will give instution on how to.
-
-controls for the calcultor:
-* Num Lock / Backspace: delete lest char
-* Scroll Lock: types the answer out in key strokes
-* Delete: clears the current number, last number, and operator
-* =/enter: give the answer
-* /-+*. : does what they are
-* x: multiplys
-* t p: add
-* Pageup/down: change how many decsial points are shown
+* 7: Not assigned
+* 8: Hex and decimal converter
+* 9: Calculator
 
 
-when makeing macros they are all stored on the mirco SD card plugged into the device. if there is no sd card all the keyboard mode will act like normal keyboard. if there is no setting on sd card or its not plug in it will go back to defualt settings
+* 0: Keyboard mode with no macros
+* Shift + 1-6: Keyboard mode with calculator functionality on the numpad
+* Ctrl + 1-6: Program macros/rebind keys for a key in the mode. The display provides instructions.
 
-   Arduino libartys that this programs uses
-   1. PS2KeyAdvanced (in lib folder)
-   2. HID-Project
-   3. Adafruit_GFX and Adafruit_sm1306 (if useing oled display)
-   4. SD
+## Calculator Controls
 
-  Doc on how to use the PS2KEYADVANCE Libarty.
-  https://github.com/techpaul/PS2KeyAdvanced
-  You should go through it to made sure how to use it.
-  
-  this project uses Project-hid for all the usb keyboard stuff. here is the doc for it: https://github.com/NicoHood/HID
+The calculator mode on the PUMBA keyboard includes the following controls:
+* Num Lock / Backspace: Delete the last character.
+* Scroll Lock: Type out the answer using key strokes.
+* Delete: Clear the current number, last number, and operator.
+* =/Enter: Calculate and display the answer.
+* /-+*. : Perform corresponding operations.
+* x: Multiply.
+* t p: Add.
+* Page Up/Down: Change the number of decimal points shown.
 
-  PS2KeyAdvanced lib is in the lib folder. I modifly the lib to disable keypad switching keybindings and change lock keys to not break everything
-  
-*   Num Lock is now PS2_KEY_LANG1
-*   Scoll Lock is now PS2_KEY_LANG2
-*   Cap Lock is now PS2_KEY_LANG3
-*   Sending data (Lock led) to the ps2 keyboard dont work using a SAMD board.
+## Macros and Key Rebinding
 
-On the PUMBA Keyboard you can change settings like how long it takes for the screen to turn off, the rotation of the screen, and what the function key is. currently there is no way to change these settings using the keyboard but you can change them in the code or put the setting in a file on the sd card. the pumba on start up looks for a config file located /SETTING/CONFIG.TXT on sd card to change the settings. 
+When creating macros, they are stored on the micro SD card inserted into the device. If no SD card is present, all keyboard modes will act as normal keyboards. If there are no settings on the SD card or it is not inserted, the device will revert to default settings.
 
-To change setting using the SD card. there is a exsample in the code folder
- 1. make a file on sd card called CONFIG.TXT in a folder named SETTING
- 2. in the config file put the name of the settings folloed by a "=". each setting needs to be on a newline
-   - sleep=SETTING
-     - SETTING the time in min that the screen withh turn off
-   - fnkey=SETTING
-     - SETTING is the ps2lib key binding in dec, the key that is used as function key
-   - rotation=SETTING
-     - SETTING set the rotation of the screen, 0 is defualt, 2 is rotated 180 degress
+The following Arduino libraries are used by this program:
+1. PS2KeyAdvanced (located in the "lib" folder)
+2. HID-Project
+3. Adafruit_GFX and Adafruit_sm1306 (for OLED display support)
+4. SD
 
- 3. Save changes to the file
- 4. put sd card in to the PUMBA and then plug it in
+To learn how to use the PS2KeyAdvanced library, refer to the documentation at [https://github.com/techpaul/PS2KeyAdvanced](https://github.com/techpaul/PS2KeyAdvanced).
 
-The Pumba now has the ablity to rebind keys per keyboard mode. to rebind the key you have to make a file called LAYOUT.TXT and put it in the mode you want to rebind the keys. the line number is the ps2lib key name and the number on the line is the hid scancode in decimal. In the code files the is a file called "default layout.txt" with is the default bind. you can copy the file and rename it and then modifly it to your needs. there is also the file called "layout cheatsheet.txt" that can help you too
+This project utilizes Project-hid for USB keyboard functionality. Refer to the documentation at [https://github.com/NicoHood/HID](https://github.com/NicoHood/HID).
 
-You can set macros or rebind almost any key on the keyboard in any of the 6 modes. there are a couple of exseptions like, scroll lock, and mayby num lock and pause break. Num lock and pause break key might work with macros, but I havent tested them and they wouldnt work with rebinds. 
+The PS2KeyAdvanced library in the "lib" folder has been modified to disable keypad switching keybindings and modify lock keys to prevent issues.
+
+* Num Lock is now PS2_KEY_LANG1.
+* Scroll Lock is now PS2_KEY_LANG2.
+* Caps Lock is now PS2_KEY_LANG3.
+* Sending data (Lock LED) to the PS2 keyboard does not work with SAMD boards.
+
+## Changing Settings
+
+On the PUMBA Keyboard, you can change settings such as the screen timeout duration, screen rotation, and the function key. Currently, there is no way to change these settings using the keyboard directly, but you can modify them in the code or by creating a settings file on the SD card. On startup, PUMBA looks for a config file named "CONFIG.TXT" located in the "/SETTING" folder on the SD card to apply the settings.
+
+To change settings using the SD card, follow these steps:
+1. Create a file named "CONFIG.TXT" in a folder named "SETTING" on the SD card.
+2. In the config file, enter the name of the setting followed by an "=" sign. Each setting should be on a new line.
+   * sleep=SETTING
+     * SETTING: The duration in minutes before the screen turns off.
+   * fnkey=SETTING
+     * SETTING: The PS2lib key binding in decimal for the function key.
+   * rotation=SETTING
+     * SETTING: The screen rotation value. 0 is default, 2 is rotated 180 degrees.
+3. Save the changes to the file.
+4. Insert the SD card into PUMBA and plug it in.
+
+## Key Rebinding
+
+PUMBA now supports the ability to rebind keys for each keyboard mode. To rebind keys, create a file named "LAYOUT.TXT" and place it in the mode for which you want to rebind the keys. Each line in the file corresponds to a PS2lib key name and the corresponding HID scancode in
+
+ decimal. In the code files, you can find a file called "default layout.txt" which contains the default key bindings. You can make a copy of this file, rename it, and modify it according to your needs. Additionally, there is a file named "layout cheatsheet.txt" that provides a helpful reference.
+
+In any of the 6 modes, you can set macros or rebind almost any key on the keyboard. However, please note that some keys such as Scroll Lock, Num Lock, and Pause Break may not be compatible with macros or key rebindings.
