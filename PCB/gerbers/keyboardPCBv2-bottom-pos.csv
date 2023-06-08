@@ -1,0 +1,5 @@
+Ref,Val,Package,PosX,PosY,Rot,Side
+"J1","Conn_01x05_Female","PinSocket_1x05_P2.54mm_Vertical",-75.932500,-32.575000,90.000000,bottom
+"P1","PS2_Port","Connector_Mini-DIN_Female_6Pin_2rows",-69.932500,-45.500000,-90.000000,bottom
+"QT_Board1","SeeeduinoXIAO","Seeeduino XIAO-MOUDLE14P-2.54-21X17.8MM",-54.932500,-35.000000,-90.000000,bottom
+"Screen1","Conn_01x04_Female","PinSocket_1x04_P2.54mm_Vertical",-51.732500,-32.000000,90.000000,bottom

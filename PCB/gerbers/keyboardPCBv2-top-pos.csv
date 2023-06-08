@@ -1,0 +1,8 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+Q1,BSS138,SOT-23,60.7325,-40.9,0,top
+Q2,BSS138,SOT-23,61.0325,-45.125,0,top
+R1,R 10k,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,64.0325,-40,-90,top
+R2,R 10k,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,63.8325,-47.2,90,top
+R3,R 10k,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,57.8325,-40.7125,-90,top
+R4,R 10k,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,57.8325,-45.1,-90,top
+U1,cheap_microSD,CheapMicroSD,51.5075,-47.8,180,top

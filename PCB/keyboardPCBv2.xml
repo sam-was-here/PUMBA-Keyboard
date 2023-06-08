@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/home/sam/Documents/kicad/keyboardPCBv2/keyboardPCBv2/keyboardPCBv2.kicad_sch</source>
+    <date>Wed 21 Sep 2022 08:45:15 PM CDT</date>
+    <tool>Eeschema 6.0.7</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>keyboardPCBv2.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J1">
+      <value>Conn_01x05_Female</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x05_Female" description="Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>64811abf-516c-4f50-8601-bf447456fb6b</tstamps>
+    </comp>
+    <comp ref="JP1">
+      <value>SolderJumper_3_Bridged12</value>
+      <footprint>Jumper:SolderJumper-3_P1.3mm_Bridged12_RoundedPad1.0x1.5mm</footprint>
+      <libsource lib="Jumper" part="SolderJumper_3_Bridged12" description="3-pole Solder Jumper, pins 1+2 closed/bridged"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0992778b-83a8-49bc-99b6-a9e6c6f46cce</tstamps>
+    </comp>
+    <comp ref="JP2">
+      <value>SolderJumper_3_Bridged12</value>
+      <footprint>Jumper:SolderJumper-3_P1.3mm_Bridged12_RoundedPad1.0x1.5mm</footprint>
+      <libsource lib="Jumper" part="SolderJumper_3_Bridged12" description="3-pole Solder Jumper, pins 1+2 closed/bridged"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2d485b69-7b1f-417c-a724-37d9316b4f7d</tstamps>
+    </comp>
+    <comp ref="P1">
+      <value>PS2_Port</value>
+      <footprint>Custom_Footprints:Connector_Mini-DIN_Female_6Pin_2rows</footprint>
+      <libsource lib="Custom_Symbols_Library" part="Mini-DIN_6pins_ver4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>71bdf30f-0832-4522-9d84-05a7f9d4f784</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>BSS138</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</datasheet>
+      <fields>
+        <field name="JLC">SOT-23-3</field>
+        <field name="LCSC">C400505</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="BSS138" description="50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="JLC" value="SOT-23-3"/>
+      <property name="LCSC" value="C400505"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a8def749-b07f-4f95-90e0-e3d7f8029b49</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>BSS138</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</datasheet>
+      <fields>
+        <field name="JLC">SOT-23-3</field>
+        <field name="LCSC">C400505</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="BSS138" description="50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="JLC" value="SOT-23-3"/>
+      <property name="LCSC" value="C400505"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>821ef217-78d7-4a72-baae-1c7e68c48370</tstamps>
+    </comp>
+    <comp ref="QT_Board1">
+      <value>SeeeduinoXIAO</value>
+      <footprint>Seeeduino XIAO KICAD:Seeeduino XIAO-MOUDLE14P-2.54-21X17.8MM</footprint>
+      <libsource lib="Seeeduino XIAO" part="SeeeduinoXIAO" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6c47c630-b89e-4b3f-9948-a3e9e8d298a0</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>R 10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <fields>
+        <field name="JLC">0603</field>
+        <field name="LCSC">C25804</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="JLC" value="0603"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>14c5fb20-2bcf-42ae-ab5b-5155d97dab2d</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>R 10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <fields>
+        <field name="JLC">0603</field>
+        <field name="LCSC">C25804</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="JLC" value="0603"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1d97828c-968e-4cfb-89be-52386ae0b38a</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>R 10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <fields>
+        <field name="JLC">0603</field>
+        <field name="LCSC">C25804</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="JLC" value="0603"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b94c54db-6574-4ee0-bda3-87cc1433914a</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>R 10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <fields>
+        <field name="JLC">0603</field>
+        <field name="LCSC">C25804</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="JLC" value="0603"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c1652921-db5c-4cd9-9030-d19ac8b4136d</tstamps>
+    </comp>
+    <comp ref="Screen1">
+      <value>Conn_01x04_Female</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x04_Female" description="Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d427b096-2104-4cac-9d5d-d2195401989e</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>cheap_microSD</value>
+      <footprint>Library:CheapMicroSD</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2009111836_SOFNG-TF-15x15_C111196.pdf</datasheet>
+      <fields>
+        <field name="JLC">TF-SMD_TF-15-15</field>
+        <field name="LCSC">C111196</field>
+      </fields>
+      <libsource lib="MyParts" part="cheap_microSD" description=""/>
+      <property name="JLC" value="TF-SMD_TF-15-15"/>
+      <property name="LCSC" value="C111196"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="keyboardPCBv2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>69a59ac5-961a-416d-afc7-25aa3492fd9a</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x04_Female">
+      <description>Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Screen</field>
+        <field name="Value">Conn_01x04_Female</field>
+        <field name="Footprint">Connector_PinHeader_1.00mm:PinHeader_1x04_P1.00mm_Vertical</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="passive"/>
+        <pin num="2" name="VDD" type="passive"/>
+        <pin num="3" name="SCK" type="passive"/>
+        <pin num="4" name="SDA" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x05_Female">
+      <description>Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x05_Female</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Custom_Symbols_Library" part="Mini-DIN_6pins_ver4">
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">Mini-DIN_6pins_ver4</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="5" name="5" type="passive"/>
+        <pin num="6" name="" type="passive"/>
+        <pin num="7" name="Shell" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="SolderJumper_3_Bridged12">
+      <description>3-pole Solder Jumper, pins 1+2 closed/bridged</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>SolderJumper*Bridged12*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">SolderJumper_3_Bridged12</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="C" type="passive"/>
+        <pin num="3" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MyParts" part="cheap_microSD">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">cheap_microSD</field>
+      </fields>
+      <pins>
+        <pin num="1" name="DAT2(RSV)" type="input"/>
+        <pin num="2" name="CDDAT3(CS)" type="input"/>
+        <pin num="3" name="CMD(DI)" type="input"/>
+        <pin num="4" name="VDD" type="input"/>
+        <pin num="5" name="CLK(SCLK)" type="input"/>
+        <pin num="6" name="VSS" type="input"/>
+        <pin num="7" name="DAT0(D0)" type="input"/>
+        <pin num="8" name="DAT1(RSV)" type="input"/>
+        <pin num="9" name="CD" type="input"/>
+        <pin num="10" name="GND" type="input"/>
+        <pin num="11" name="GND" type="input"/>
+        <pin num="12" name="GND" type="input"/>
+        <pin num="13" name="GND" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Seeeduino XIAO" part="SeeeduinoXIAO">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">SeeeduinoXIAO</field>
+      </fields>
+      <pins>
+        <pin num="1" name="PA02_A0_D0" type="unspecified"/>
+        <pin num="2" name="PA4_A1_D1" type="unspecified"/>
+        <pin num="3" name="PA10_A2_D2" type="unspecified"/>
+        <pin num="4" name="PA11_A3_D3" type="unspecified"/>
+        <pin num="5" name="PA8_A4_D4_SDA" type="unspecified"/>
+        <pin num="6" name="PA9_A5_D5_SCL" type="unspecified"/>
+        <pin num="7" name="PB08_A6_D6_TX" type="unspecified"/>
+        <pin num="8" name="PB09_A7_D7_RX" type="unspecified"/>
+        <pin num="9" name="PA7_A8_D8_SCK" type="unspecified"/>
+        <pin num="10" name="PA5_A9_D9_MISO" type="unspecified"/>
+        <pin num="11" name="PA6_A10_D10_MOSI" type="unspecified"/>
+        <pin num="12" name="3V3" type="unspecified"/>
+        <pin num="13" name="GND" type="unspecified"/>
+        <pin num="14" name="5V" type="unspecified"/>
+        <pin num="15" name="5V" type="input"/>
+        <pin num="16" name="GND" type="input"/>
+        <pin num="17" name="PA31_SWDIO" type="input"/>
+        <pin num="18" name="PA30_SWCLK" type="input"/>
+        <pin num="19" name="RESET" type="input"/>
+        <pin num="20" name="GND" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_FET" part="BSS138">
+      <description>50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23</description>
+      <docs>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BSS138</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>/app/extensions/Library/symbols//Connector.kicad_sym</uri>
+    </library>
+    <library logical="Custom_Symbols_Library">
+      <uri>/home/sam/Documents/kicad libs/kicad_libraries-master/Custom_Symbols/Custom_Symbols_Library.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>/app/extensions/Library/symbols//Device.kicad_sym</uri>
+    </library>
+    <library logical="Jumper">
+      <uri>/app/extensions/Library/symbols//Jumper.kicad_sym</uri>
+    </library>
+    <library logical="MyParts">
+      <uri>/home/sam/.var/app/org.kicad.KiCad/data/kicad/6.0/symbols/MyParts.kicad_sym</uri>
+    </library>
+    <library logical="Seeeduino XIAO">
+      <uri>/home/sam/Documents/kicad libs/Seeeduino XIAO KICAD/Seeeduino XIAO.lib</uri>
+    </library>
+    <library logical="Transistor_FET">
+      <uri>/app/extensions/Library/symbols//Transistor_FET.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3.3V">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="JP1" pin="1" pinfunction="A" pintype="passive"/>
+      <node ref="JP2" pin="3" pinfunction="B" pintype="passive"/>
+      <node ref="Q1" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="Q2" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="QT_Board1" pin="12" pinfunction="3V3" pintype="unspecified"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="VDD" pintype="input"/>
+    </net>
+    <net code="2" name="+5V">
+      <node ref="P1" pin="4" pinfunction="4" pintype="passive"/>
+      <node ref="QT_Board1" pin="14" pinfunction="5V" pintype="unspecified"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+    </net>
+    <net code="3" name="/PS2_CLK">
+      <node ref="P1" pin="5" pinfunction="5" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="4" name="/PS2_DAT">
+      <node ref="P1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="Q2" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+    </net>
+    <net code="5" name="EXTRA_PIN1">
+      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="QT_Board1" pin="1" pinfunction="PA02_A0_D0" pintype="unspecified"/>
+    </net>
+    <net code="6" name="EXTRA_PIN2">
+      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="QT_Board1" pin="7" pinfunction="PB08_A6_D6_TX" pintype="unspecified"/>
+    </net>
+    <net code="7" name="EXTRA_PIN3">
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="QT_Board1" pin="8" pinfunction="PB09_A7_D7_RX" pintype="unspecified"/>
+    </net>
+    <net code="8" name="GND">
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="JP1" pin="3" pinfunction="B" pintype="passive"/>
+      <node ref="JP2" pin="1" pinfunction="A" pintype="passive"/>
+      <node ref="P1" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="P1" pin="7" pinfunction="Shell" pintype="passive"/>
+      <node ref="QT_Board1" pin="13" pinfunction="GND" pintype="unspecified"/>
+      <node ref="U1" pin="10" pinfunction="GND" pintype="input"/>
+      <node ref="U1" pin="11" pinfunction="GND" pintype="input"/>
+      <node ref="U1" pin="12" pinfunction="GND" pintype="input"/>
+      <node ref="U1" pin="13" pinfunction="GND" pintype="input"/>
+      <node ref="U1" pin="6" pinfunction="VSS" pintype="input"/>
+    </net>
+    <net code="9" name="Keyboard_CLK">
+      <node ref="Q1" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="QT_Board1" pin="3" pinfunction="PA10_A2_D2" pintype="unspecified"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+    </net>
+    <net code="10" name="Keyboard_DATA">
+      <node ref="Q2" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="QT_Board1" pin="4" pinfunction="PA11_A3_D3" pintype="unspecified"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+    </net>
+    <net code="11" name="Net-(JP1-Pad2)">
+      <node ref="JP1" pin="2" pinfunction="C" pintype="passive"/>
+      <node ref="Screen1" pin="1" pinfunction="GND" pintype="passive"/>
+    </net>
+    <net code="12" name="Net-(JP2-Pad2)">
+      <node ref="JP2" pin="2" pinfunction="C" pintype="passive"/>
+      <node ref="Screen1" pin="2" pinfunction="VDD" pintype="passive"/>
+    </net>
+    <net code="13" name="SD_CS">
+      <node ref="QT_Board1" pin="2" pinfunction="PA4_A1_D1" pintype="unspecified"/>
+      <node ref="U1" pin="2" pinfunction="CDDAT3(CS)" pintype="input"/>
+    </net>
+    <net code="14" name="SD_MISO">
+      <node ref="QT_Board1" pin="10" pinfunction="PA5_A9_D9_MISO" pintype="unspecified"/>
+      <node ref="U1" pin="7" pinfunction="DAT0(D0)" pintype="input"/>
+    </net>
+    <net code="15" name="SD_MOSI">
+      <node ref="QT_Board1" pin="11" pinfunction="PA6_A10_D10_MOSI" pintype="unspecified"/>
+      <node ref="U1" pin="3" pinfunction="CMD(DI)" pintype="input"/>
+    </net>
+    <net code="16" name="SD_SCK">
+      <node ref="QT_Board1" pin="9" pinfunction="PA7_A8_D8_SCK" pintype="unspecified"/>
+      <node ref="U1" pin="5" pinfunction="CLK(SCLK)" pintype="input"/>
+    </net>
+    <net code="17" name="Screen_SCL">
+      <node ref="QT_Board1" pin="6" pinfunction="PA9_A5_D5_SCL" pintype="unspecified"/>
+      <node ref="Screen1" pin="3" pinfunction="SCK" pintype="passive"/>
+    </net>
+    <net code="18" name="Screen_SDA">
+      <node ref="QT_Board1" pin="5" pinfunction="PA8_A4_D4_SDA" pintype="unspecified"/>
+      <node ref="Screen1" pin="4" pinfunction="SDA" pintype="passive"/>
+    </net>
+    <net code="19" name="unconnected-(P1-Pad2)">
+      <node ref="P1" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="20" name="unconnected-(P1-Pad6)">
+      <node ref="P1" pin="6" pintype="passive"/>
+    </net>
+    <net code="21" name="unconnected-(QT_Board1-Pad15)">
+      <node ref="QT_Board1" pin="15" pinfunction="5V" pintype="input"/>
+    </net>
+    <net code="22" name="unconnected-(QT_Board1-Pad16)">
+      <node ref="QT_Board1" pin="16" pinfunction="GND" pintype="input"/>
+    </net>
+    <net code="23" name="unconnected-(QT_Board1-Pad17)">
+      <node ref="QT_Board1" pin="17" pinfunction="PA31_SWDIO" pintype="input"/>
+    </net>
+    <net code="24" name="unconnected-(QT_Board1-Pad18)">
+      <node ref="QT_Board1" pin="18" pinfunction="PA30_SWCLK" pintype="input"/>
+    </net>
+    <net code="25" name="unconnected-(QT_Board1-Pad19)">
+      <node ref="QT_Board1" pin="19" pinfunction="RESET" pintype="input"/>
+    </net>
+    <net code="26" name="unconnected-(QT_Board1-Pad20)">
+      <node ref="QT_Board1" pin="20" pinfunction="GND" pintype="input"/>
+    </net>
+    <net code="27" name="unconnected-(U1-Pad1)">
+      <node ref="U1" pin="1" pinfunction="DAT2(RSV)" pintype="input"/>
+    </net>
+    <net code="28" name="unconnected-(U1-Pad8)">
+      <node ref="U1" pin="8" pinfunction="DAT1(RSV)" pintype="input"/>
+    </net>
+    <net code="29" name="unconnected-(U1-Pad9)">
+      <node ref="U1" pin="9" pinfunction="CD" pintype="input"/>
+    </net>
+  </nets>
+</export>
