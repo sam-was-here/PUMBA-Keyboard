@@ -4,8 +4,6 @@ PUMBA-Keyboard is a PS2 to USB macro board adapter created using the Arduino fra
 
 PUMBA stands for PS2 to USB Macro Board Adapter.
 
-**WARNING**: The code is mostly complete, but there is still a lot of work needed for documentation. There are many spelling and grammar mistakes, and additional content needs to be added to the repository.
-
 ## Description
 
 PUMBA-Keyboard is an Arduino project that converts a PS2 keyboard into a USB keyboard with additional features. It includes a built-in calculator and the ability to create and playback macros. The board also has a small display for showing different information.
